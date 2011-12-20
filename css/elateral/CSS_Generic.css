@@ -1,0 +1,50 @@
+
+body{ font-family:Arial,Verdana,Helvetica,sans-serif; font-size:12px;}
+p{font-size:12px;}
+h2{color:#616365;}
+.clear{clear:both;}
+
+/**** Basket Styles Start ****/
+.SavedItemsTable tr.SunshineTableTitleBG{}
+.SavedItemsTable tr.SunshineTableTitleBG td{ height:30px; vertical-align:middle;}
+.SavedItemsTable tr.SunshineTableTitleBG td span{vertical-align:middle;}
+#toDoContainer h2, #readyList h2{font-size:18px; font-weight:normal; float:left; width:50%;margin:10px 0;}
+#readyList{border-bottom: solid 2px #E2E2E3; padding-bottom:30px; margin-bottom:15px;}
+
+.ordersCheckBox{margin:0px; padding:0;}
+.SunshinebasketTableColSep{ background-color:#E2E2E3;padding-left:0;width:1px;}
+.ItemPrice{ text-align:right;}
+.buttonsDiv{ height:40px;}
+.buttonsDiv .buttonsRight {padding-top:5px;}
+/**** Basket Styles End ****/
+
+/****Order Confirmtion Styles****/
+#orderConfirmation p{margin:0;}
+#orderConfirmation h2{font-size:12px;padding:10px; height:auto; margin:0;}
+#orderConfirmation .orderDetailsItem, #orderConfirmation .orderDetailsItemAlt {padding:10px;border-bottom: solid 1px #E2E2E3; }
+#orderDetailsItems{padding:10px 0;font-size:12px;}
+.orderDetailsItem .orderDetailsItemLeft, .orderDetailsItemAlt .orderDetailsItemLeft{float:left;width:64%;}
+.orderDetailsItem .orderDetailsItemRight, .orderDetailsItemAlt .orderDetailsItemRight{float:left;width:32%; padding-left:5px;}
+/****Order Confirmtion Styles****/
+/*#mailingListQuantity { background-color:Black; padding:0px; height:0px; display:block !important;}*/
+
+/******Buttons*********/
+.buttonsRight{float:right;}
+.buttonsLeft{float:left;}
+.actions a {cursor:pointer;}
+.action{float:left;}
+.action #btnTakeSelected{margin:0;}
+.action #btnPlaceAllOrders{margin:0 0 0 10px;}
+#btnReConfigure{}
+#btnTakeSelected{}
+#btnPlaceAllOrders{}
+#btnBackToShop{float:right;}
+#btnCancel{}
+#btnBackToConfigure{}
+#btnAcceptOrder{}
+#btnAcceptAndCompleteLater{}
+#btnAcceptAndContinue{}
+#btnSave{}
+#btnReConfigure{}
+/******Buttons*********/
+#mailListQuantityText{padding:0; margin:0;display:none;}

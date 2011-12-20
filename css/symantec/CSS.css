@@ -1,0 +1,1772 @@
+html {
+  height:100%;
+  width:100%;
+  overflow: -moz-scrollbars-vertical;
+  overflow:scroll;
+}
+html, body
+{
+	font-family:Arial, Helvetica, sans-serif;
+	margin:0;
+	padding:0;
+}
+html body {
+  font-size:11px;
+  color:#636363;
+  height:100%;
+  width:100%;
+  
+}
+body 
+{
+    text-align:center;
+	background:#fff url('Header/bg-page.jpg') left bottom repeat-x;
+	background-attachment:fixed;
+}
+a img {
+	border:0px;
+	}
+a 
+{
+color: #d84704;
+font-size: 11px;
+text-decoration:none;
+}
+/*a:link 
+{
+color: #005498;
+text-decoration: underline;
+
+}*/
+a:visited 
+{
+
+}
+a:hover 
+{
+	text-decoration:underline;
+}
+/*------------------------------------------------------------------------- Layout */
+#MasterTable {
+	margin:0;
+	padding:0;
+}
+table.MasterTable {
+width:980px;
+border-left:15px solid #fff;
+border-right:15px solid #fff;
+margin:0 auto;
+padding:0;
+background-color:#fff;
+}
+/*------------------------------------------------------------------- General styles */
+#contentContainer
+{
+margin-top:10px;
+}
+.ProfileDetailsText
+{
+display:none;
+}
+
+.NoWrap1
+{
+     white-space:noWrap;
+}
+
+/* -------------------------------------------------------------------- Header Styles */
+#pageHeader
+{
+	/*background:url('Header/bg-header.gif') left top repeat-x;*/
+	background-color:#fff;
+	height:70px;
+	border-bottom:1px solid #d6d5d4;
+}
+#logo	{
+	float:left;
+    margin:0px 0 0 0px;
+    width:376px;
+    height:70px;
+    background:url('Header/symantec-logo.jpg') left top no-repeat;
+}
+	#logo a {
+		display:block;
+		width:376px;
+    	height:70px;
+		text-indent:-999em;
+	}
+
+/* -------------------------------------------------------------------------- main navigatin */
+.navTD {
+	background:url(sunshine/Tab.gif) left top repeat-x;
+	HEIGHT: 30px;
+}
+.SunshineTab
+{
+    CURSOR: hand;
+    HEIGHT: 30px;
+    color:#ffffff;
+	background:url(sunshine/Tab.gif) left top repeat-x;
+}
+.SunshineTabText
+{
+    FONT-SIZE: 12px;
+    CURSOR: hand;
+    COLOR: #ffffff !important;
+    TEXT-DECORATION: none !important;
+    padding: 0px;
+}
+.SunshineTabSel
+{
+    HEIGHT: 30px;
+    BACKGROUND-image: URL(Sunshine/selectedtab.gif);
+}
+.SunshineTabTextSel
+{
+    FONT-SIZE: 12px;
+    COLOR: #ffcc00 !important;
+    TEXT-DECORATION: none !important;
+}
+/*-------------------------------------- sub Nav */
+.SunshineTab2
+{
+    PADDING-RIGHT: 5px;
+    PADDING-LEFT: 5px;
+    CURSOR: hand;
+    TEXT-DECORATION: none;
+}
+.SunshineTabText2 a:link
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 11px;
+    CURSOR: hand;
+    COLOR: #ffffff;
+    TEXT-DECORATION: none;
+    PADDING-RIGHT: 5px;
+    PADDING-LEFT: 20px;
+}
+a.SunshineTabText2:visited
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 11px;
+    CURSOR: hand;
+    COLOR: #ffffff;
+    TEXT-DECORATION: none;
+    PADDING-RIGHT: 5px;
+    PADDING-LEFT: 20px;
+}
+a.SunshineTabText2:hover
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 11px;
+    CURSOR: hand;
+    COLOR: #ffffff;
+    TEXT-DECORATION: none;
+    PADDING-RIGHT: 5px;
+    PADDING-LEFT: 20px;
+}
+.SunshineTabSel2
+{
+    PADDING-RIGHT: 5px;
+    PADDING-LEFT: 5px;
+    CURSOR: hand;
+    HEIGHT: 30px
+}
+a.SunshineTabTextSel2:link
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 11px;
+    COLOR: #ffcc00;
+    TEXT-DECORATION: none;
+    PADDING-RIGHT: 5px;
+    PADDING-LEFT: 20px;
+}
+a.SunshineTabTextSel2:visited
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 11px;
+    COLOR: #ffcc00;
+    TEXT-DECORATION: none;
+    PADDING-RIGHT: 5px;
+    PADDING-LEFT: 20px;
+}
+a.SunshineTabTextSel2:hover
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 11px;
+    COLOR: #ffcc00;
+    TEXT-DECORATION: none;
+    PADDING-RIGHT: 5px;
+    PADDING-LEFT: 20px;
+}
+/* ------------------------------------------------------------------ header links */
+#headLinks {
+	position:absolute;
+	top:10px;
+	width:950px;
+}
+.SunshineCrumb
+{
+    FONT-SIZE: 0px;
+    COLOR: #ffffff;
+    padding: 0px 0px 0px 0px;
+    height: 0px;
+}
+.SunshineBannerlink
+{
+        margin-left: 10px;
+        text-indent: -9999px;
+        display:block;
+        overflow:hidden;
+        text-decoration:none;
+}
+
+#SunshineBannerLink_Exit {
+	border-left:1px solid #ccc;
+	padding-left:10px;
+}
+#SunshineBannerLink_Basket {
+	position:relative;
+	left:3px;
+}
+.SunshineBannerLink_TD_IT_en-us #SunshineBannerLink_Basket,
+.SunshineBannerLink_TD_IT_en-gb #SunshineBannerLink_Basket { background: url('Sunshine/IT_en-us/BasketButton.gif') 0 2px no-repeat; width: 66px;}
+.SunshineBannerLink_TD_IT_en-us #SunshineBannerLink_Help,
+.SunshineBannerLink_TD_IT_en-gb #SunshineBannerLink_Help { background: url('Sunshine/IT_en-us/HelpButton.gif') 0px 2px no-repeat; width: 0px; display:none;} 
+.SunshineBannerLink_TD_IT_en-us #SunshineBannerLink_Exit,
+.SunshineBannerLink_TD_IT_en-gb #SunshineBannerLink_Exit { background: url('Sunshine/IT_en-us/ExitButton.gif') 10px 2px no-repeat; width: 50px;}
+
+.SunshineBannerLink_TD_IT_de #SunshineBannerLink_Basket { background: url('Sunshine/IT_de/BasketButton.gif') 0 2px no-repeat; width: 106px;}
+.SunshineBannerLink_TD_IT_de #SunshineBannerLink_Help { background: url('Sunshine/IT_de/HelpButton.gif') 0 2px no-repeat; width: 0px; display:none;} 
+.SunshineBannerLink_TD_IT_de #SunshineBannerLink_Exit { background: url('Sunshine/IT_de/ExitButton.gif') 10px 2px no-repeat; width: 62px;}
+
+.SunshineBannerLink_TD_IT_es-co #SunshineBannerLink_Basket { background: url('Sunshine/IT_es-co/BasketButton.gif') 0 2px no-repeat; width: 100px;}
+.SunshineBannerLink_TD_IT_es-co #SunshineBannerLink_Help { background: url('Sunshine/IT_es-co/HelpButton.gif' 0 2px) no-repeat; width: 0px; display:none;} 
+.SunshineBannerLink_TD_IT_es-co #SunshineBannerLink_Exit { background: url('Sunshine/IT_es-co/ExitButton.gif') 10px 2px no-repeat; width: 78px;}
+
+.SunshineBannerLink_TD_IT_fr #SunshineBannerLink_Basket { background: url('Sunshine/IT_fr/BasketButton.gif') 0 0px no-repeat; width: 106px;}
+.SunshineBannerLink_TD_IT_fr #SunshineBannerLink_Help { background: url('Sunshine/IT_fr/HelpButton.gif') 0 2px no-repeat; width: 0px; display:none;} 
+.SunshineBannerLink_TD_IT_fr #SunshineBannerLink_Exit { background: url('Sunshine/IT_fr/ExitButton.gif') 10px 2px no-repeat; width: 90px;}
+
+.SunshineBannerLink_TD_IT_it #SunshineBannerLink_Basket { background: url('Sunshine/IT_it/BasketButton.gif') 0 2px no-repeat; width: 79px;}
+.SunshineBannerLink_TD_IT_it #SunshineBannerLink_Help { background: url('Sunshine/IT_it/HelpButton.gif') 0 2px no-repeat; width: 0px; display:none;} 
+.SunshineBannerLink_TD_IT_it #SunshineBannerLink_Exit { background: url('Sunshine/IT_it/ExitButton.gif') 10px 2px no-repeat; width: 89px;}
+
+.SunshineBannerLink_TD_IT_Ko #SunshineBannerLink_Basket { background: url('Sunshine/IT_Ko/BasketButton.gif') 0 2px no-repeat; width: 61px;}
+.SunshineBannerLink_TD_IT_Ko #SunshineBannerLink_Help { background: url('Sunshine/IT_Ko/HelpButton.gif') 0 2px no-repeat; width: 0px; display:none;} 
+.SunshineBannerLink_TD_IT_Ko #SunshineBannerLink_Exit { background: url('Sunshine/IT_Ko/ExitButton.gif') 10px 2px no-repeat; width: 57px;}
+
+.SunshineBannerLink_TD_IT_pt-br #SunshineBannerLink_Basket { background: url('Sunshine/IT_pt-br/BasketButton.gif') 0 2px no-repeat; width: 60px;}
+.SunshineBannerLink_TD_IT_pt-br #SunshineBannerLink_Help { background: url('Sunshine/IT_pt-br/HelpButton.gif') 0 2px no-repeat; width: 0px; display:none;} 
+.SunshineBannerLink_TD_IT_pt-br #SunshineBannerLink_Exit { background: url('Sunshine/IT_pt-br/ExitButton.gif') 10px 2px no-repeat; width: 33px;}
+
+.SunshineBannerLink_TD_IT_zh #SunshineBannerLink_Basket { background: url('Sunshine/IT_zh/BasketButton.gif') 0 2px no-repeat; width: 47px;}
+.SunshineBannerLink_TD_IT_zh #SunshineBannerLink_Help { background: url('Sunshine/IT_zh/HelpButton.gif') 0 2px no-repeat; width: 0px; display:none;} 
+.SunshineBannerLink_TD_IT_zh #SunshineBannerLink_Exit { background: url('Sunshine/IT_zh/ExitButton.gif') 10px 2px no-repeat; width: 35px;}
+
+/* ------------------------------------------------------------ default links 
+.actions{
+	float:left;
+	margin: 0 0px 0 10px;
+}
+.actions a {
+	height:25px;
+	background:#fff url('Sunshine/btn-default.gif') left top no-repeat;
+	float:left;
+        color:#636363; 
+	text-decortaion:none;
+	margin: 0 0 0 5px;
+}
+.actions a span {
+	height:25px;
+	line-height:25px;
+	float:left;
+    color:#636363 !important;
+    font-weight: normal; 
+	margin:0 0 0 15px;
+	padding:0 15px 0 0;
+    background:#fff url('Sunshine/btn-default.gif') right top no-repeat;
+}*/
+.actions a {
+	height:25px;
+	background:#fff url(Sunshine/btn-default.gif) left top no-repeat;
+	float:left;
+	color:#636363;
+	line-height:25px;
+	padding:0px;
+	margin:0 10px 0 0;
+	text-decoration:none;
+	font-size:12px;
+}
+.actions a:hover {
+	text-decoration:none;
+}
+.actions a span {
+	display:block;
+	height:25px;
+	color:#636363;
+	background:#fff url(Sunshine/btn-default.gif) right top no-repeat;
+	margin:0 0 0 5px;
+	padding:0 15px 0 10px;
+	float:left;
+}
+
+.actions a#btnPlaceOrder {
+	background:#d84704 url(Sunshine/btn-primary.gif) left top no-repeat;
+	color:#fff;
+}
+.actions a#btnPlaceOrder span{
+	background:#d84704 url(Sunshine/btn-primary.gif) right top no-repeat;
+	color:#fff;
+	font-weight:bold;
+}
+
+.action {
+	float:left;
+	margin: 0 0px 0 10px;
+}
+.delete,
+.orderSel  {
+	margin-right:2px;
+}
+.actions .orderSel a {
+	background:#d84704 url(Sunshine/btn-primary.gif) left top no-repeat;
+	color:#fff;
+}
+.delete a span {
+	/*background:#65bbf7 url(Sunshine/btn-default.gif) right top no-repeat;*/
+}
+.actions .orderSel a span {
+	background:#d84704 url(Sunshine/btn-primary.gif) right top no-repeat;
+	color:#fff;
+	font-weight:bold;
+}
+#UpperButtons {
+	margin:0 0 15px 0;
+}
+/* ----------------------------------------------------- page titles */
+#panelArea
+{
+	font-weight:normal;
+	color:#000000;
+	display:none;
+}
+#panelTitle
+{
+	font-family:arial;
+	font-size:24px;
+	font-weight:normal;
+	color:#262626;
+	margin:0px 0px 5px 10px;
+	padding:0;
+}
+/* ------------------------------------------------------ sunshine styles */
+.LHsinglePanelWrapper {
+ width: 200px;
+ margin: 0 10px;
+}
+.LeftPanelSingleTemplateSunshinePanelItemTitle a {
+    color: #222222 !important;
+    font-size: 12px;
+}
+.LeftPanelSingleTemplateSunshinePanelItemTitle
+{
+    color: #222222 !important;
+    font-size: 12px;
+}
+.MiddleSingleHeadder{
+    border-color: #B6B6B4;
+    border-style: none solid;
+    border-width: 4px;
+    color: #222222;
+    font-size: 12px;
+    padding: 7px;
+}
+#framework-footer {
+  margin:28px 0 0 15px; 
+  font-size:86%;
+  color:#333; 
+  background-color:#fff;
+  line-height:120%;
+  font-size : 11px;
+  }
+#framework-footer a, #framework-footer a:visited {
+  color:#333333; 
+  background-color:transparent; 
+  }
+#framework-footer a:hover {
+  text-decoration:underline;
+  }
+#framework-footer #footer-copyright {
+  padding:0 60px 0 0; 
+  float:left;
+  }
+#framework-footer #footer-legal {
+  float:left;
+  padding-bottom:18px;
+  }
+.normallink
+{
+margin: -5px 0;
+}
+
+.LeftPanelHeaderTemplateSunshinePanelItemTitle
+{
+color:#222222 !important;
+font-size:12px;
+}
+.LeftPanelHeaderTemplateSunshinePanelItemTitle a
+{
+color:#222222 !important;
+font-size:12px;
+}
+.LHmidpanelWrapper
+{
+	width:170px;
+	margin:0px 10px 0px 10px;
+}
+.MiddleHeadder
+{
+	font-size:12px;
+	color:#222222;
+	border-width: 4px;
+	border-color:#b6b6b4;
+	border-style:none solid none solid;
+	padding-left: 7px;
+}
+.LHmidContentWrapper
+{
+	font-size:12px;
+	color:#222222;
+	border-width: 4px;
+	border-color:#b6b6b4;
+	border-style:none solid none solid;
+	padding: 5px 0px 0px 0px;
+
+}
+.LeftPanelTemplateSunshinePanelItemTitle
+{
+	color: #D84704;
+	font-size: 11px;
+	font-weight: normal;
+	text-decoration: none;
+	cursor: hand;
+        padding: 0px 15px 5px 20;
+        background-image: url('/Looks/{9B630E48-2C9F-4B1E-B7C4-71C4DCD0F49C}/Sunshine/Point.gif');
+        background-repeat: no-repeat;
+}
+
+
+.LoginLeftPanelTitleText
+{
+Color:#000000;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.LoginLeftPanelOptionText
+{
+Color:#000000;
+Font-Size:12px;
+}
+
+.LoginRightPanelTitleText
+{
+Color:#FFFFFF;
+Font-Weight:Bold;
+Font-Size:18px;
+}
+
+.LoginRightPanelInstructionText
+{
+Color:#FFFFFF;
+Font-Size:12px;
+}
+
+.LoginRightPanelFieldText
+{
+Color:#FFFFFF;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.LoginRightPanelErrorMessageText
+{
+Color:#FFFFFF;
+Font-Size:10px;
+}
+
+.SidePanelTitleText
+{
+Color:#FFFFFF;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.SidePanelSubItemsText
+{
+Color:#FFFFFF;
+Font-Size:10px;
+}
+
+.SidePanelSectionTitleText
+{
+Color:#FFFFFF;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.SidePanelSelectedItemPointer
+{
+Color:#FFFFFF;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.BigPageTitle
+{
+Color:#999999;
+Font-Weight:Bold;
+Font-Size:16px;
+line-height:100%;
+}
+
+.MainText1
+{
+Color:#000000;
+Font-Size:12px;
+}
+
+.MainText2
+{
+Color:#000000;
+Font-Size:12px;
+}
+
+.MainText3
+{
+Color:#FFFFFF;
+Font-Weight:Bold;
+Font-Size:16px;
+}
+
+.MainText4
+{
+Color:#000000;
+Font-Weight:Normal;
+Font-Size:12px;
+}
+
+.MainText5
+{
+Color:#FFFFFF;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.MainText6
+{
+Color:#000000;
+Font-Weight:Bold;
+Font-Size:14px;
+}
+
+.ErrorMessage
+{
+Color:#CC0000;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.PagingText1
+{
+Color:#d84704;
+Font-Size:12px;
+Font-Weight:Normal;
+}
+
+.PagingText2
+{
+Color:#d84704;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.PagingText3
+{
+Color:#b6b6b4;
+Font-Weight:Normal;
+Font-Size:12px;
+}
+
+.PagingItemCountText
+{
+Color:#333333;
+Font-Weight:Bold;
+Font-Size:10px;
+}
+
+/* ----------------------------------------------------------- table styles */
+.TableTitleBG
+{
+Background:#eee url(sunshine/bg-grad-header.png) left bottom repeat-x;
+}
+
+
+.TableDataBG
+{
+Background-Color:#f5f5f5;
+}
+
+.CustomTable1TitleBG
+{
+Background-Color:#efefef;
+}
+
+.CustomTable1BG
+{
+Background-Color:#efefef;
+}
+
+.TableTitleText
+{
+	Color:#333;
+	Font-Weight:normal;
+	Font-Size:12px;
+	border-top:1px solid #cfcfcf;
+}
+
+.TableDataText1
+{
+Color:#666666;
+Font-Size:12px;
+Font-Weight:Normal;
+}
+
+.TableDataText2
+{
+Color:#666666;
+	Font-Size:12px;
+	Font-Weight:Bold;
+}
+
+.TableDataText3
+{
+Color:#666666;
+	Font-Size:12px;
+	Font-Weight:Bold;
+}
+
+.TableMessageText
+{
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.CustomTable1TitleText
+{
+Color:#666666;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.CustomTable1ItemTitle
+{
+Color:#666666;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.CustomTable1ItemText
+{
+Color:#666666;
+Font-Weight:Normal;
+Font-Size:12px;
+}
+
+.ButtonNormalText
+{
+Color:#FFFFFF;
+Font-Weight:Bold;
+Font-Style:Italic;
+Font-Size:12px;
+}
+
+.ButtonTableText
+{
+Font-Size:12px;
+padding:0 5px 0 0;
+}
+
+.ButtonLoginText
+{
+Color:#000000;
+Font-Weight:Bold;
+Font-Style:Italic;
+Font-Size:12px;
+}
+
+.poweredbyActiBrand
+{
+Color:#b6b6b4;
+Font-Weight:Normal;
+Font-Size:11px;
+Font-Style:Italic;
+}
+
+.DocumentsMessage
+{
+Color:#000000;
+Font-Weight:Bold;
+Font-Size:14px;
+}
+
+.DocumentsTitle
+{
+Color:#000000;
+Font-Weight:Bold;
+Font-Size:18px;
+}
+
+.DocumentsDescription
+{
+Color:#000000;
+Font-Weight:Normal;
+Font-Size:12px;
+}
+
+.DocumentsDate
+{
+Color:#000000;
+Font-Weight:Normal;
+Font-Size:10px;
+}
+
+.OrderStepsArrows
+{
+Color:#999999;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.OrderStepsActiveText
+{
+Color:#CC0000;
+Font-Weight:Bold;
+Font-Size:14px;
+}
+
+.OrderStepsDeactiveText
+{
+Color:#999999;
+Font-Weight:Bold;
+Font-Size:14px;
+}
+
+.OrderOptionsText
+{
+Color:#000000;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.TableMainColumnText
+{
+Color:#333;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.RecoveredOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.UnsubmittedOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.SavedOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.RejectedByAuthoriserOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.SubmittedOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.BeingAuthorisedOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.SentForProductionOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.AcceptedForProductionOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.BeingProducedOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.CompletedOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.RejectedByProducerOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.ReadyToDownloadOrderFlash
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.HMO_StepTitle
+{
+Color:#000000;
+Font-Size:14px;
+Font-Weight:Bold;
+}
+
+.HMO_MainText
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Normal;
+}
+
+.HMO_MainTextHighlighted
+{
+Color:#ffcc00;
+Font-Size:12px;
+Font-Weight:Bold;
+}
+
+.HMO_MainTextHighlighted2
+{
+Color:#000000;
+Font-Size:12px;
+Font-Weight:Normal;
+Font-Style:Italic;
+}
+
+.OldNetscapeLoginButton
+{
+Color:#000000;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.OldNetscapeNormalButton
+{
+Color:#000000;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.OldNetscapeTableButton
+{
+Color:#000000;
+Font-Weight:Bold;
+Font-Size:12px;
+}
+
+.LoginLeftPanelBG
+{
+Background-Color:#FFFFFF;
+}
+
+.LoginSepLine
+{
+Background-Color:#ffc909;
+}
+
+.LoginRightPanelBG
+{
+Background-Color:#a2a09e;
+}
+
+.SidePanel
+{
+Background-Color:#000000;
+}
+
+.SidePanelTitleBG
+{
+Background-Color:#000000;
+}
+
+.Lines
+{
+Background-Color:#b6b6b4;
+}
+
+.TopLine
+{
+Background-Color:#ffcc00;
+}
+
+.TitleBarBG
+{
+Background-Color:#ffcc00;
+}
+
+
+
+.ButtonNormalBG
+{
+Background-Color:#000000;
+}
+
+.ButtonTableBG
+{
+BACKGROUND-image: URL(Sunshine/button_table.gif);
+}
+
+.ButtonLoginBG
+{
+Background-Color:#ffffff;
+}
+
+.OrderStepsActiveBox
+{
+Background-Color:#CC0000;
+}
+
+.OrderStepsDeactiveBox
+{
+Background-Color:#999999;
+}
+
+.OrderStepsActiveBG
+
+{
+Background-Color:#FFFFFF;
+}
+
+.OrderStepsDeactiveBG
+{
+Background-Color:#FFFFFF;
+}
+
+.OrderOptionsBG
+{
+Background-Color:#b6b6b4;
+}
+.SunshineContentCell
+{
+	/*padding-left: 10px;
+	padding-right: 10px;*/
+}
+.SunshineTabSpacing
+{
+	BACKGROUND-COLOR: #ffffff;
+	width: 0px;
+}
+.SunshineSidePanelGroup
+{
+	/*width: 200px;*/
+	display:none;
+    BACKGROUND-COLOR: #ffffff;
+    margin:0px 0px 0px 0px;
+    padding:0px 0px 0px 0px;
+}
+.SunshinePanelSpace
+{
+	display:none;
+	width: 5px;
+	BACKGROUND-COLOR: #ffffff;
+}
+.SunshineBannerButton
+{
+padding-left:12px\9;
+       }
+
+.SunshineBannerButton a {
+position:relative;
+top:-2px;
+}
+@-moz-document url-prefix() { 
+.SunshineBannerButton a 
+{
+  position:relative;
+  top:0px;
+  }
+}
+
+.ThumbnailImage
+{
+	border-width: 0;
+}
+
+.SunshineBodyText1
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 13px;
+    COLOR: #000000;
+}
+.SunshineBodyText2
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 12px;
+    COLOR: #000000;
+}
+A .SunshineBodyText2
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 12px;
+    COLOR: #000000;
+    TEXT-DECORATION: none
+}
+.SunshineBodyText3
+{
+    FONT-SIZE: 13px;
+    COLOR: #000000;
+}
+.SunshineBodyText4
+{
+    FONT-SIZE: 10px;
+    COLOR: #000000;
+}
+.SunshineBodyText4 A
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 10px;
+}
+.SunshineRequiredBodyText4
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 10px;
+    COLOR: #000000;
+}
+.SunshineRequiredBodyText4 A
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 10px;
+    COLOR: #000000;
+}
+.SunshineBodyText
+{
+    FONT-SIZE: 12px;
+    COLOR: #000000;
+}
+
+
+.SunshinePanelTitle
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 14px;
+    COLOR: #ffffff;
+	padding-top:3px;
+}
+.SunshinePanelItemTitleSmall
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    CURSOR: hand;
+    COLOR: #003399;
+    TEXT-DECORATION: underline
+}
+.SunshinePanelItemTitleSmallNoLink
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    COLOR: #000000;
+    TEXT-DECORATION: none
+}
+.SunshinePanelItemMoreSmall
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 10px;
+    CURSOR: hand;
+    COLOR: #003399;
+    TEXT-DECORATION: underline
+}
+.SunshinePanelTitleBar
+{
+    BACKGROUND-COLOR: #FFCC00
+}
+.SunshinePanelSubTitleBar
+{
+    display:none;
+    BACKGROUND-COLOR: #ffcc00
+}
+.SunshinePanelSubTitleBarShadow
+{
+    display:none;
+    BACKGROUND-COLOR: #b6b6b4
+}
+.SunshinePanelItemTitle
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 10px;
+    CURSOR: hand;
+    COLOR: #003399;
+    TEXT-DECORATION: underline
+}
+.SunshinePanelItemTitleNoLink
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 14px;
+    COLOR: #000000;
+    TEXT-DECORATION: none
+}
+.SunshinePanelItemDescription
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 10px;
+    CURSOR: hand;
+    COLOR: #000000;
+    TEXT-DECORATION: none
+}
+.SunshinePanelContent
+{
+    BACKGROUND-COLOR: #b6b6b4
+}
+.SunshinePanelFooterBar
+{
+    BACKGROUND-COLOR: #b6b6b4
+}
+.SunshineDetailPanelTitle
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 13px;
+    COLOR: #ffffff;
+}
+.SunshineDetailPanelMore
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 11px;
+    CURSOR: hand;
+    COLOR: #ffffff;
+    TEXT-DECORATION: underline
+}
+.SunshineDetailPanelTitleBar
+{
+    HEIGHT: 20px;
+    BACKGROUND-COLOR: #ffcc00
+}
+.SunshineFeaturePanelTitle
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    COLOR: #ffffff;
+}
+.SunshineFeaturePanelMore
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 11px;
+    CURSOR: hand;
+    COLOR: #ffffff;
+    TEXT-DECORATION: underline
+}
+.SunshineFeaturePanelTitleBarGrey
+{
+    HEIGHT: 25px;
+    BACKGROUND-COLOR: #b6b6b4
+}
+.SunshineFeaturePanelTitleBar
+{
+    HEIGHT: 25px;
+    BACKGROUND-COLOR: #000000
+}
+.SunshineOrderPanelTitle
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    COLOR: #ffffff;
+}
+.SunshineOrderPanelMore
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    CURSOR: hand;
+    COLOR: #ffffff;
+    TEXT-DECORATION: underline
+}
+.SunshineOrderPanelTitleBar
+{
+    BACKGROUND-COLOR: #ffcc00
+}
+.SunshineTitleText
+{
+    FONT-SIZE: 25px;
+    COLOR: #000000;
+}
+.SunshineTitleTextGrey
+{
+    FONT-SIZE: 23px;
+    COLOR: #b6b6b4;
+}
+.SunshineStepText
+{
+    FONT-SIZE: 18px;
+    COLOR: #000000;
+}
+.SunshineStepTextGrey
+{
+    FONT-SIZE: 18px;
+    COLOR: #b6b6b4;
+}
+.SunshineMenuBottomPanel
+{
+    BACKGROUND-COLOR: #222222;
+    height: 25px;
+}
+.SunshineMenuBottomPanel table
+{
+    BACKGROUND-COLOR: #222222;
+    height: 25px;
+    border-right-style: solid;
+    border-right-width: 0px;
+    border-right-color: #ffffff;
+}
+.SunshineLinkText
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 12px;
+    COLOR: #d84704;
+	padding:0 0 0 0;
+}
+.SunshineButtonLinkText
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 12px;
+    COLOR: #636363;
+}
+.SunshineBigLinkText
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 16px;
+    COLOR: #636363;
+}
+.SunshineFilterBG
+{
+    BACKGROUND-COLOR: #b6b6b4
+}
+.SunshineFilterSelectedItem
+{
+    COLOR: #FFFFFF;
+    BACKGROUND-COLOR: #CC0000;
+}
+.SunshineSummaryTableDataBG
+{
+    BACKGROUND-COLOR: #b6b6b4;
+}
+.SunshineSummaryTableDataBGAlt
+{
+    BACKGROUND-COLOR: #b6b6b4;
+}
+.SunshineSummaryTableDataText1
+{
+    FONT-SIZE: 10px;
+    HEIGHT: 30px;
+    BACKGROUND-COLOR: #b6b6b4;
+}
+.SunshineSummaryTableDataText1Alt
+{
+    FONT-SIZE: 10px;
+    HEIGHT: 30px;
+    BACKGROUND-COLOR: #b6b6b4;
+}
+.SunshineSummaryTableSubTitleBG
+{
+    HEIGHT: 2px;
+    BACKGROUND-COLOR: #b6b6b4;
+}
+
+.SunshineTable
+{
+}
+.SunshineTableTitleColSep
+{
+	width: 1px;
+	background-color: #cfcfcf;
+	padding-left: 0px;
+}
+.SunshineTableColSep
+{
+	width: 1px;
+	background-color: #cfcfcf;
+	padding-left: 0px;
+}
+.SunshineTableColSepAlt
+{
+	width: 1px;
+	background-color: #cfcfcf;
+	padding-left: 0px;
+}
+.SunshineTableRowSeparator
+{
+
+BACKGROUND-COLOR: #cfcfcf;
+}
+
+.SunshineTableDataBG
+{
+    BACKGROUND-COLOR: #fff;
+}
+.SunshineTableDataBGAlt
+{
+    BACKGROUND-COLOR: #eee;
+}
+.SunshineTableDataText1
+{
+    FONT-SIZE: 10px;
+    BACKGROUND-COLOR: #fff
+}
+.SunshineTableDataText1Alt
+{
+    FONT-SIZE: 10px;
+    BACKGROUND-COLOR: #eee;
+}
+.SunshineTableDataHighlight
+{
+    FONT-SIZE: 10px;
+    BACKGROUND-COLOR: #ffffff;
+}
+.SunshineTableMessageText
+{
+    FONT-WEIGHT:normal;
+    FONT-SIZE: 16px;
+    COLOR: #616365;
+}
+.SunshineTableTitleBG {
+	Background:#eee url(sunshine/bg-grad-header.png) left bottom repeat-x;
+}
+.SunshineTableTitleText
+{
+    padding:0 3px;
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 12px;
+    COLOR: #333;
+    HEIGHT: 20px;
+	line-height:20px;
+}
+.SunshineTableTitleText a span
+{
+    text-decoration: none !important;
+}
+td.SunshineTableTitleText
+{
+	border-top:1px solid #cfcfcf;
+}
+.SunshineTableNumberTitleText
+{
+    padding:0 3px;
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    COLOR: #333;
+    HEIGHT: 20px;
+	line-height:20px;
+    text-align:centre;
+}
+td.SunshineTableNumberTitleText
+{
+	border-top:1px solid #cfcfcf;
+}
+.SunshineTableSubTitleBG
+{
+    HEIGHT: 0px;
+}
+	.SunshineTableSubTitleBG img {
+		display:none;
+	}
+.SunshineTableMainColumnText
+{
+}
+.SunshineTableDate
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    COLOR: #000000;
+}
+.SunshineTableText
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    COLOR: #000000;
+}
+.SunshineTableOutputType
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 10px;
+    COLOR: #636363;
+	text-align:left;
+	margin:0 0 0 10px;
+}
+.SunshineTableOffering
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 10px;
+    COLOR: #333;
+	text-align:left;
+	margin:0 0 0 10px;
+}
+.SunshineTableDataText2 {
+	margin:0 0 0 5px;
+}
+.SunshineLeftMarginCell
+{
+    WIDTH: 0px
+}
+.SunshineRightMarginCell
+{
+    WIDTH: 0px
+}
+.SunshineSpacerCell
+{
+    WIDTH: 10px
+}
+/* ---------------------------------------------------- saved items */
+#readyList H2 {
+margin:10px 0 10px 10px;
+}
+#toDoContainer H2 {
+margin:10px 0 10px 10px;
+}
+.SavedItemsTable tr.SunshineTableTitleBG td span {
+position:relative;
+left:-2px\9;
+}
+
+/* --------------------------------------------------------- used for search box */
+
+.SunshineBoxNormal
+{
+    border:1px solid #ccc;
+	background-color:#f5f5f5;
+}
+#divSearchOptions, #divShowSearchOptions {
+	background:#fff url(sunshine/bg-box.gif) left top no-repeat;
+padding:10px 0 0 0;
+}
+#divSearchOptions .SunshineBoxNormal, #divShowSearchOptions .SunshineBoxNormal
+{
+    background:#fff url(sunshine/bg-box.gif) left bottom no-repeat;
+	margin:0px 0 0 0;
+	width:100%;
+padding:0 0 10px 0;
+border:0px;
+}
+#divSearchOptions .SunshineBoxNormal tbody, #divShowSearchOptions .SunshineBoxNormal tbody
+{
+position:relative;
+top:-5px;
+
+}
+#divShowSearchOptions center {
+text-align:left;
+}
+
+.SunshineBoxTitle
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 14px;
+}
+.SunshineBoxText0
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 12px;
+}
+.SunshineBoxText1
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 12px;
+}
+.SunshineBoxHighlight
+{
+    BACKGROUND-COLOR: #e2e2e3;
+}
+.SunshineOfferingPropertyBackground
+{
+    BACKGROUND-COLOR: #efefef;
+}
+.SunshineSubTitle
+{
+    FONT-SIZE: 18px;
+    COLOR: #000000;
+    FONT-FAMILY: Arial
+}
+.SunshineOfferingLink
+{
+    FONT-SIZE: 10px;
+    CURSOR: hand;
+    COLOR: #003399;
+    TEXT-DECORATION: underline
+}
+.SunshineOfferingTitleLink
+{
+    FONT-SIZE: 18px;
+    CURSOR: hand;
+    COLOR: #003399;
+   TEXT-DECORATION: underline
+}
+.SunshineOfferingTypeSmall
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 1px;
+    CURSOR: hand;
+    COLOR: #ffffff;
+}
+.SunshineOfferingDesc
+{
+    FONT-SIZE: 12px;
+    COLOR: #000000;
+    FONT-FAMILY: Arial
+}
+.PriceTableRowBG
+{
+    BACKGROUND-COLOR: #ffffff
+}
+.SunshineOfferingMessageSmall
+{
+	FONT-WEIGHT: bold;
+    FONT-SIZE: 10px;
+    CURSOR: hand;
+    COLOR: #000000;
+}
+
+.CenterpanelWrapper
+{
+	margin:0px 0px 0px 0px;
+}
+.CenterTopLHS
+{	
+    float:left;
+	width:10px;
+	clear:left;
+}
+.CenterTopRHS
+{
+    float:right;
+	width:10px;
+
+}
+.CenterHeadder
+{
+    float:left;
+	font-size:14px;
+	font-weight:bold;
+	color:#000000;
+	Padding:8px 0px 0px 0px;
+}
+.GreyCenterHeadderBar
+{
+	background-color:#b6b6b4;
+    padding-left:10px;
+	height:30px;
+}
+.CenterContentWrapper
+{
+	border-width: 1px;
+	border-color:#e4e4e4;
+	border-style:none solid none solid;
+	padding-left:10px;
+	padding-top:10px;
+	padding-bottom:10px;
+	text-align: Center;
+
+}
+.CenterBottomLHS
+{
+	float:left;
+	width:10px;
+}
+.CenterFooter
+{
+	height:6px;
+	background-image: url('Sunshine/CenterPanelBottom.gif');
+}
+.CenterBottomRHS
+{
+	float:Right;
+	width:6px;
+}
+.CustomCenterPanelSunshinePanelItemMoreSmall
+{
+	text-align: Center;
+}
+.CustomCenterPanelSunshineCampaignThumb
+{
+	text-align: Center;
+}
+
+.panelWrapper
+{
+	width:200px;
+	margin:15px 10px 0px 10px;
+}
+.TopLHS
+{	
+    float:left;
+	width:10px;
+	clear:left;
+}
+.TopRHS
+{
+    float:right;
+	width:10px;
+}
+.Headder
+{
+    float:left;
+	font-size:14px;
+	font-weight:bold;
+	color:#ffffff;
+	Padding:5px 0px 0px 0px;
+}
+.HeadderBar
+{
+	background-image: url('Sunshine/paneltopborder.gif');
+	height:26px;
+}
+.ContentWrapper
+{
+	font-size:12px;
+	color:#222222;
+	border-width: 4px;
+	border-color:#b6b6b4;
+	border-style:none solid none solid;
+	padding: 10px 10px 10px 10px;
+
+}
+.BottomLHS
+{
+	float:left;
+	width:10px;
+}
+.Footer
+{
+	height:10px;
+	background-image: url('Sunshine/panelbottomborder.gif');
+}
+.BottomRHS
+{
+	float:Right;
+	width:10px;
+}
+#offering_configuration_Header
+{
+ display:none;
+}
+
+#offering_configuration_Footer
+{
+ display:none;
+}
+/* ------------------------------------------------------- DM Admin */
+#uiMainStart form img {
+}
+#frmFilters a {
+	padding:0 2px 0 5px;
+}
+	
+/* ------------------------------------------------------------------- Footer Styles */
+#footerBar
+{
+	width:950px;
+	height:60px;
+	position:relative;
+	border-top:1px solid #ccc;
+	text-align:left;
+	margin:0 auto;
+	border-left:0px solid #fff;
+	border-right:0px solid #fff;
+	clear:both;
+	color:#A2A09E;
+}
+.footerImg {
+	
+}
+.copyright {
+	float:left;
+	margin:10px 10px 0 0;
+	font-size:11px;
+}
+.footerText
+{
+
+	font-size:11px;
+	float:left;
+}
+	.footerText ul {
+		padding:0;
+		margin:0;
+		list-style:none;
+	}
+	.footerText li {
+		float:left;
+		display:block;
+		padding:0 0px 0 0px;
+		margin:10px 0 10px 0;
+	}
+	.footerText li.f {
+		padding:0 0px 0 0px;
+	}
+	.footerText li.l {
+	}
+	.footerText li a,
+	.footerText li a:link
+	.footerText li a:visited
+	 {
+		color:#A2A09E;
+		font-size:11px;
+		padding:0 5px;
+border-left:1px solid #ccc;
+
+	}
+	.footerText li a:hover
+	 {
+		
+	}
+
+.powered-by-elateral
+    {
+      font-size:11px;
+      float:right;
+      margin-top:8px;
+      }
+
+ sup {font-size:7px;}
+ 

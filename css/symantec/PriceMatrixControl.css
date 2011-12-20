@@ -1,0 +1,84 @@
+.property
+{
+	width:660px;
+	padding:5px;
+	clear:both;
+}
+.label
+{
+	width:150px;
+	text-align:right;
+	white-space:nowrap;
+	vertical-align:top;
+	position:relative;
+	top:0.25em;
+	display:inline;
+	margin-right:5px;
+	float:left;
+}
+.value
+{
+	width:500px;
+	float:right;
+}
+.number 
+{
+	width:5em;
+}
+.priceBreak
+{
+	float:left;
+	width:75px;
+	margin:3px;
+}
+.priceBreakValue
+{
+	width:75px;
+	text-align:right;
+}
+.priceQuantity
+{
+	float:left;
+	width:25px;
+}
+.priceBreakRemoveButton
+{
+	display:inline;
+	cursor:pointer;
+}
+#priceMatrixName 
+{
+	width:20em;
+}
+
+.priceMatrixDesc
+{
+	width:20em;
+	height:5em;
+}
+
+#priceMatrixDescription 
+{
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+#priceMatrixPriceBreaksTable
+{
+	margin-top:10px;
+}
+#addEditPriceMatrixButtons
+{
+	margin-left:150px;
+	clear:both;
+}
+#priceBreakList 
+{
+	display:inline;
+}
+#illustrationQuantity
+{
+	margin-top:5px;
+	width:7em;
+	text-align:right;
+}
