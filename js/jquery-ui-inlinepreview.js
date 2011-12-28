@@ -112,6 +112,7 @@
 				.appendTo(tabsBox);
 			
 			this.tabControl = tabsBox.tabs({
+				selected: -1,
 				select: function(event, ui) {
 					if (options.tabbed)
 					{
@@ -492,11 +493,7 @@
 					
 					if (bWithLink)
 					{
-						var previewLink = $('\<a target="_new" id="preview_' + self._guidInternalPreviewResponseGUID + '" href="' + imageLinkURL + '"\></a>');
-						previewLink.appendTo(imgContainer);
-						
-						// reset the imgContainer object to be the newly appended anchor tag.
-						imgContainer = previewLink;
+						newImageElem.click(function() { self._popupDisplay( "Preview", imageLinkURL ); });
 					}
 					newImageElem.appendTo(imgContainer);
 					

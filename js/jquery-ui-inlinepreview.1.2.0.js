@@ -2,28 +2,30 @@
 	$.widget("ui.inlinepreview", {
 		options: {
 			style: {
-				type: "tabbed", // [simple, tabbed]
-				initialSelectedTab: null, // [null, tab.index, tab.title] if null no autoInitSelection will be made
+				type: "tabs", // [simple, buttons, tabs]
+				initialSelectedTab: null, // [null, tab.index, tab.id] if null no autoInitSelection will be made
 				popupButtons: true,
 				useSlider: false,
 				processingImage: "images/processing.gif"
 				width: 400,
 				height: 400,
 			},
-			previewWidth: 400, // [int, string["sizeof(jQuery Selector)", "valueof(jQuery Selector)"]]
-			previewHeight: 400, // [int, string["sizeof(jQuery Selector)", "valueof(jQuery Selector)"]]
+			previewWidth: "widthof(#preview-container)", // [int, string["widthof(jQuery Selector)", "heightof(jQuery Selector)", "valueof(jQuery Selector)"]]
+			previewHeight: "heightof(#preview-container)", // [int, string["sizeof(jQuery Selector)", "valueof(jQuery Selector)"]]
 			fade: {
 				speed: 500,
 				easing: "swing"
 			},
 			tabs: [
-				{title: "Portrait", href: "?tab=1"},
-				{title: "Landscape", href: "?tab=2"},
-				{title: "No Preview", href: "?tab=3"},
-				{title: "Script Error", href: "?tab=4"},
-				{title: "Warning", href: "?tab=5"}
+				{id: "portrait", title: "Portrait", href: "?tab=1"},
+				{id: "landscape", title: "Landscape", href: "?tab=2"},
+				{id: "nopreview", title: "No Preview", href: "?tab=3"},
+				{id: "script", title: "Script Error", href: "?tab=4"},
+				{id: "warning", title: "Warning", href: "?tab=5"}
 			],
 			errorCodes: [
+				{errorCode: "MESSAGE_POPUP", errorMessage: "Here is the requested preview."},
+				{errorCode: "ERROR_IMAGELOAD", errorMessage: "There was an error loading the preview image."},
 				{errorCode: "ERROR_ALREADYPROCESSING", errorMessage: "There is already a preview being generated."},
 				{errorCode: "ERROR_CORRUPTPROJECT", errorMessage: "The project has been corrupted."},
 				{errorCode: "ERROR_FONTNOTFOUND", errorMessage: "A required font was not found."},
@@ -48,25 +50,469 @@
 		_currentPreview: null,
 		_guidInternalPreviewResponseGUID: "",
 		_tabControl: null,
+		_tabPanel: null,
 		_previewContainer: null,
 		_sliderControl: null,
 		_buttonPanel: null,
 		_popupButtonPanel: null,
 		_messageDialog: null,
+		previewImage: null,
 		_create: function() {
+			this._trigger("creatingInlinePreview", null, this);
+			
 			// setup preview controls
+			var self = this,
+				options = self.options,
+				elem = self.element;
+			
+			// setup the inline preview element and empty it
+			elem.empty();
+			elem.addClass("ui-widget ui-ip");
+			
+			// create new preview container element (will be attached later)
+			self._previewContainer = $("<div></div>")
+				.attr("id", "preview-container")
+				.html("&nbsp;")
+				.css({
+					"width": ($.type(options.style.width) === "string" ? options.style.width : parseInt(options.style.width) + "px"),
+					"height": ($.type(options.style.height) === "string" ? options.style.height : parseInt(options.style.height) + "px")
+				});
+			
+			if (options.style.type.toLowerCase() != "simple")
+			{
+				var tabsBox = $("<div></div>")
+					.attr("id", "ip-tabs")
+				
+				var tabsList = $("<ul></ul>").appendTo(tabsBox);
+				
+				var tabItems = options.tabs;
+				if (options.style.type.toLowerCase() === "buttons")
+				{
+					tabItems = [{title: "Preview", href: "#tab-1"}];
+				}
+				
+				for (var i = 0; i < tabItems.length; i++)
+				{
+					var tabitem = $("<li></li>")
+						.appendTo(tabsList);
+					
+					var tablink = $("<a></a>")
+						.attr("href", "#tabs-1")
+						.attr("data-popup", "false")
+						.attr("data-url", self._appendParams(options.processURL.ajax, options.tabs[i].href))
+						.addClass("ip-tab")
+						.text(options.tabs[i].title)
+						.appendTo(tabitem);
+				}
+				
+				self._tabPanel = $("<div></div>")
+					.addClass("previewBox")
+					.attr("id", "tabs-1")
+					.appendTo(tabsBox);
+				
+				// add the preview container to the tab.
+				self._previewContainer.appendTo(tabsBox);
+				
+				// add the tabs to the main element
+				tabsBox.appendTo(elem);
+				
+				self._tabControl = tabsBox;
+			}
+			else
+			{
+				// add the preview container to the main element
+				self._previewContainer.appendTo(elem);
+			}
+			
+			if (options.style.useSlider)
+			{
+				self._sliderControl = $("<div></div>")
+					.attr("id", "ip-page-selector")
+					.appendTo(elem);
+			}
+			
+			if (options.style.type.toLowerCase() != "tabs" || options.style.popupButtons)
+			{
+				if (options.style.type.toLowerCase() != "tabs")
+				{
+					self._buttonPanel = $("<div></div>")
+						.addClass("ip-btn-panel")
+						.appendTo(self._tabControl);
+				}
+				
+				if (options.style.popupButtons)
+				{
+					self._popupButtonPanel = $("<div></div>")
+						.addClass("ip-btn-panel")
+						.appendTo(self._tabControl);
+				}
+				
+				for (var i = 0; i < options.tabs.length; i++)
+				{
+					if (options.style.type.toLowerCase() != "tabs")
+					{
+						self._appendButton(i, false, self._buttonPanel);
+					}
+					
+					if (options.style.popupButtons)
+					{
+						self._appendButton(i, true, self._popupButtonPanel);
+					}
+				}
+			}
+			
+			self._messageDialog = $("<div></div>")
+				.attr("id", "preview-dialog")
+				.attr("title", "Preview Dialog")
+				.appendTo(elem);
+			
+			this._trigger("createdInlinePreview", null, this);
 		},
 		_init: function() {
 			// add functionality to the controls
+			this._trigger("initialisingInlinePreview", null, this);
+			
+			var self = this,
+				options = self.options;
+				
+			self._messageDialog
+				.dialog({
+					autoOpen: false,
+					resizable: false,
+					heigth: options.style.height + 25,
+					width: options.style.width + 25,
+					draggable: false,
+					modal: true,
+					buttons: {
+						OK: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			
+			if (self._tabControl != null)
+			{
+				self._tabControl.tabs({
+					selected: options.style.type.toLowerCase() !== "tabs" ? 0 : -1,
+					select: function(event, ui) {
+						if (options.style.type.toLowerCase() === "tabs")
+						{
+							self._currentPreview = ui.index;
+							return self._requestPreview(self._currentPreview, ui.tab);
+						}
+						
+						return false;
+					}
+				});
+			}
+			
+			if (self._sliderControl != null)
+			{
+				self._sliderControl.slider({
+					min: 1,
+					max: options.tabs.length,
+					slide: function( event, ui ) {
+						self._trigger("selectingPage", null, ui);
+						
+						self._currentPreview = ui.value;
+						self._requestPreview(self._currentPreview, $(this));
+						
+						self._trigger("pageSelected", null, ui);
+					}
+				});
+			}
+			
+			if (options.style.initialSelectedTab != null)
+			{
+				var previewId = self._getTabIndex(options.style.initialSelectedTab);
+				
+				if (self._sliderControl != null)
+				{
+					self._sliderControl.slider("value", previewId);
+				}
+				
+				switch (options.style.type)
+				{
+					case "tabs": self._tabControl.tabs("select", previewId); break;
+					default: $("button:nth-child(" + previewId + ")", self._buttonPannel).click(); break;
+				}
+			}
+			
+			this._trigger("initialisedInlinePreview", null, this);
 		},
-		_requestPreview: function() {
+		_getTabIndex: function (tabInfo) {
+			if (tabInfo == null) return 1;
+			
+			var self = this,
+				options = self.options;
+			
+			// check if the index was already passed
+			if ($.type(tabInfo) == "number" && tabInfo < options.tabs.length) return tabInfo;
+			
+			// now check if the id or title was passed
+			for (var i = 0; i < options.tabs.length; i++)
+			{
+				if (options.tab[i].id === tabInfo)
+				{
+					return i;
+				}
+				
+				if (options.tab[i].title === tabInfo)
+				{
+					return i;
+				}
+			}
+			
+			// no tab found default to the first tab
+			return 1;
+		},
+		_getPreviewSize: function( dimension ) {
+			var dimensionValue;
+			switch (dimension)
+			{
+				case "width": dimensionValue = this.options.previewWidth; break;
+				case "height": dimensionValue = this.options.previewHeight; break;
+			}
+			
+			
+			//divWidth = ($.type(divWidth) != 'number' || divWidth == 0 ? options.width : divWidth);
+			//divHeight = ($.type(divHeight) != 'number' || divHeight == 0 ? options.height : divHeight);
+		},
+		_requestPreview: function( pageToPreview, ui ) {
 			// make the request for a new preview
+			this._trigger("requestingPreview", null, this);
+			
+			var result = true,
+				self = this,
+				options = self.options;
+			
+			var ajaxUrl = $(ui).attr("data-url");
+			if (self._parseBool($(ui).attr("data-popup")))
+			{
+				self._displayMessage( { displaySrc: ajaxUrl } );
+			}
+			else
+			{
+				if (self._guidInternalPreviewResponseGUID.length == 0)
+				{
+					self._previewContainer
+						.addClass("loading")
+						.css("background-image", "url(" + options.style.processingImage + ")");
+					
+					self._guidInternalPreviewResponseGUID = self._generateCustomGuid('IP', false, false);
+					ajaxUrl = self._appendParam(ajaxUrl, options.proccessIdQuerystringParamName, self._guidInternalPreviewResponseGUID)
+					
+					self._previewContainer.find("img").animate({ opacity: 0 }, options.fade.speed, options.fade.easing);
+					
+					var postFormData = $('form' + options.formId).serializeArray();
+					
+					$.ajax({
+						type: 'POST',
+						data: postFormData,
+						contentType: 'application/x-www-form-urlencoded',
+						url: ajaxUrl,
+						dataType: 'json',
+						cache: false,
+						success: function( oResponse, sErrorDesc, oXHTTPRequest )
+						{
+							try
+							{
+								if (self._guidInternalPreviewResponseGUID == oResponse.PreviewRequestGUID)
+								{
+									switch (oResponse.Status)
+									{
+										case "Cancelled":
+											window.location = oResponse.CancelledURL; // cancelled order so redirect to the cancelled url
+											break;
+										case "Preview":
+										case "Error":
+										case "Warning":
+											// now we need to update the HTML of the preview
+											if (oResponse.PreviewImage.length != 0)
+											{
+												self._embedScaledImage( oResponse.PreviewImage, oResponse.PreviewLink )
+											}
+											else
+											{
+												if (oResponse.PreviewLink.length != 0)
+												{
+													self._displayMessage( { displaySrc: oResponse.PreviewLink, removeSpinner: true } );
+												}
+												else
+												{
+													self._displayMessage( { errorCode: "ERROR_NODATA", removeSpinner: true } );
+												}
+											}
+											if (oResponse.Status == 'Error' || oResponse.Status == 'Warning')
+											{
+												var icon = (oResponse.Status === "Error" ? "circle-close" : "alert");
+												self._displayMessage( { errorCode: oResponse.ErrorCode, iconClass: icon, removeSpinner: true } );
+											}
+											break;
+										default:
+											self._displayMessage( { errorCode: "ERROR_INVALIDRESPONSE", removeSpinner: true } );
+											break;
+									}
+								}
+							}
+							catch(e)
+							{
+								self._displayMessage( { errorCode: "ERROR_PROCESSING", removeSpinner: true } );
+							}
+						},
+						error: function(oXHTTPRequest, sErrorDesc, oError)
+						{
+							if (oXHTTPRequest.status != 0)
+								self._displayMessage( { errorCode: "ERROR_REQUEST", removeSpinner: true } );
+						}
+					});
+				}
+				else
+				{
+					self._displayMessage( { errorCode: "ERROR_ALREADYPROCESSING", iconClass: "alert", removeSpinner: false );
+					result = false;
+				}
+			}
+			
+			this._trigger("previewRequestedComplete", null, this);
+			
+			return result;
 		},
-		_embedPreviewImage: function() {
+		_embedPreviewImage: function( imageSrc, imageLinkURL ) {
 			// scale and display the new preview image
+			this._trigger("embeddingScaledImage", null, this);
+			
+			var self = this,
+				options = self.options;
+			
+			var img = $(new Image())
+				.load(function () {
+					try
+					{
+						var divWidth = self._getPreviewSize("width");
+						var divHeight = self._getPreviewSize("height");
+						
+						var width = img.width;
+						var height = img.height;
+						
+						var scaleH = (divWidth / width);
+						var scaleV = (divHeight / height);
+						var scale = scaleH < scaleV ? scaleH : scaleV;
+						
+						if (scale != 0)
+						{
+							img.width = Math.round(width * scale);
+							img.height = Math.round(height * scale);
+						}
+					}
+					catch (e)
+					{
+						self._displayMessage( { errorCode: "ERROR_SCALING", iconClass: "circle-close", removeSpinner: true } );
+					}
+					
+					self.previewImage = $('\<img src="' + img.src + '" /\>')
+						.attr('alt', 'Preview Image')
+						.css('border', '0')
+						.css('width', img.width)
+						.css('height', img.height)
+						.css('opacity', '0');
+					
+					if (!$.support.opacity)     // IE doesn't support opacity, so we can use it as a test
+					{
+						var divHeight = self._getPreviewSize("height");
+						var padT = Math.round((divHeight - img.height) / 2);
+						
+						self.previewImage.css('top', padT);
+					}
+					
+					// clear the current contence of the container before adding the new image / anchor
+					self._previewContainer.empty();
+					
+					if ($.type(imageLinkURL) === 'string' && imageLinkURL.length != 0)
+					{
+						self.previewImage.click(function() { self._displayMessage( { displaySrc: imageLinkURL } ); });
+					}
+					self.previewImage.appendTo(self._previewContainer);
+					
+					self.previewImage.animate({ opacity: 1 }, options.fade.speed, options.fade.easing, function() {
+						self._previewContainer
+							.removeClass("loading")
+							.css("background-image", "none");
+						
+						self._guidInternalPreviewResponseGUID = "";
+					});
+				})
+				.error(function () {
+					self._displayMessage( { errorCode: "ERROR_IMAGELOAD", iconClass: "circle-close", removeSpinner: true } );
+				})
+				.attr('src', imageSrc);
+			
+			this._trigger("embededScaledImage", null, this);
 		},
-		_displayMessage: function() {
+		_displayMessage: function( settings ) {
 			// use messageDialog to display and error or a popup preview
+			var title = (settings.displaySrc.length != 0 ? "Preview" : (settings.iconClass == "circle-close" || settings.iconClass.length == 0 ? "An Error Occured" : "Warning"));
+			
+			if (settings.displaySrc.length != 0)
+			{
+				var contentIFrame = $("<iframe></iframe>")
+					.attr("src", displaySrc)
+					.css({
+						height: options.height,
+						width: options.width
+					})
+					.appendTo(self._messageDialog);
+			}
+			else
+			{
+				var icon = $("<span></span>")
+					.addClass("ui-icon ui-icon-" + (settings.iconClass.length != 0 ? settings.iconClass : "circle-close"))
+					.css({
+						"float": "left",
+						"margin": "0 7px 50px 0"
+					})
+				var para = $("<p></p>").prepend(icon).appendTo(self._messageDialog);
+				
+				if (settings.errorCode.length != 0)
+				{
+					para.text(self._getErrorMessage(settings.errorCode));
+				}
+				else if (settings.message.length != 0)
+				{
+					para.text(settings.message);
+				}
+			}
+			
+			if (settings.removeSpinner)
+			{
+				self._previewContainer
+					.removeClass("loading")
+					.css("background-image", "none");
+				
+				self._guidInternalPreviewResponseGUID = "";
+			}
+			
+			self._messageDialog
+				.attr("title", title)
+				.dialog("open");
+		},
+		_appendButton: function( tabId, isPopup, buttonPanelElem ) {
+			var self = this,
+				options = self.options;
+			
+			var tab = options.tabs[tabId];
+			
+			var btn = $("<button>")
+				.addClass("ip-btn")
+				.text(tab.title)
+				.attr("data-popup", isPopup ? "true" : "false")
+				.attr("data-url", self._appendParams(isPopup ? options.processingUrls.popup : options.processingUrls.inline, tab.href))
+				.appendTo(buttonPanelElem)
+				.button()
+				.click(function() {
+					if ($(this).attr("data-popup") === "false") { self._currentPreview = tabId; }
+					self._requestPreview(self._currentPreview, $(this));
+				});
 		},
 		_getErrorMessages: function( errorCode ) {
 			var self = this,
