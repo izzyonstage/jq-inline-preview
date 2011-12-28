@@ -16,4 +16,9 @@ div#preview-container.loading
 	background-repeat: no-repeat;
 	background-position: center;
 	}
-
+	
+div.ui-ip hr
+	{
+	border: none;
+	height: 1px;
+	}
