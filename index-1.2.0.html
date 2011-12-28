@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>jQuery UI Inline Preview</title>
+		<link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.16.custom.css" />
+		<link rel="stylesheet" type="text/css" href="css/ui.inlinepreview.css" />
+	</head>
+	<body>
+		<div id="inlinePreview"></div>
+		<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.16.custom.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-inlinepreview.1.2.0.js"></script>
+		<script type="text/javascript">
+			j$ = jQuery.noConflict();
+			j$(function() {
+				j$("div#inlinePreview").inlinepreview({
+					style: {
+						type: "buttons", // [simple, buttons, tabs]
+						initialSelectedTab: null, // [null, tab.index, tab.id] if null no autoInitSelection will be made
+						popupButtons: true,
+						useSlider: false,
+						processingImage: "images/processing.gif"
+					},
+					formId: "#Elateral_Questions",
+					processingUrls: {
+						inline: "ajax/process.asp",
+						popup: "process.asp"
+					},
+					tabs: [
+						{id: "portrait", title: "Portrait", href: "?tab=1"},
+						{id: "landscape", title: "Landscape", href: "?tab=2"},
+						{id: "nopreview", title: "No Preview", href: "?tab=3"},
+						{id: "script", title: "Script Error", href: "?tab=4"},
+						{id: "warning", title: "Warning", href: "?tab=5"}
+					]
+				});
+			});
+		</script>
+	</body>
+</html>
