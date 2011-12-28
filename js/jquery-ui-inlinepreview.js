@@ -326,7 +326,7 @@
 											}
 											else
 											{
-												self._displayError( self._getErrorMessage("ERROR_NODATA"), "circle-close", true );
+												self._displayError( self._getErrorMessages("ERROR_NODATA"), "circle-close", true );
 											}
 										}
 										
@@ -339,25 +339,25 @@
 									else
 									{
 										if (oResponse.Status != 0)
-											self._displayError( self._getErrorMessage("ERROR_INVALIDRESPONSE"), "circle-close", true );
+											self._displayError( self._getErrorMessages("ERROR_INVALIDRESPONSE"), "circle-close", true );
 									}
 								}
 							}
 							catch(e)
 							{
-								self._displayError( self._getErrorMessage("ERROR_PROCESSING"), "circle-close", true );
+								self._displayError( self._getErrorMessages("ERROR_PROCESSING"), "circle-close", true );
 							}
 						},
 						error: function(oXHTTPRequest, sErrorDesc, oError)
 						{
 							if (oXHTTPRequest.status != 0)
-								self._displayError( self._getErrorMessage("ERROR_REQUEST"), "circle-close", true );
+								self._displayError( self._getErrorMessages("ERROR_REQUEST"), "circle-close", true );
 						}
 					});
 				}
 				else
 				{
-					self._displayError( self._getErrorMessage("ERROR_ALREADYPROCESSING"), "alert", false );
+					self._displayError( self._getErrorMessages("ERROR_ALREADYPROCESSING"), "alert", false );
 					result = false;
 				}
 			}
@@ -410,7 +410,7 @@
 					break;
 				}
 			}
-			if (errorMessage.length == 0) { errorMessage = this._getErrorMessage("ERROR_UNKNOWN"); }
+			if (errorMessage.length == 0) { errorMessage = self._getErrorMessages("ERROR_UNKNOWN"); }
 			
 			return errorMessage;
 		},
@@ -460,7 +460,7 @@
 					}
 					catch (e)
 					{
-						self._displayError( self._getErrorMessage("ERROR_SCALING"), "circle-close", true );
+						self._displayError( self._getErrorMessages("ERROR_SCALING"), "circle-close", true );
 					}
 					
 					var newImageElem = $('\<img src="' + img.src + '" /\>')
