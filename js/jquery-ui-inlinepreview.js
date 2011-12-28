@@ -447,7 +447,7 @@
 					}
 					
 					var newImageElem = $('\<img src="' + img.src + '" /\>')
-						.attr('alt', 'Preview Image'
+						.attr('alt', 'Preview Image')
 						.css('border', '0')
 						.css('width', img.width)
 						.css('height', img.height)
