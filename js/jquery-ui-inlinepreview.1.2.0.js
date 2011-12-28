@@ -7,9 +7,11 @@
 				popupButtons: true,
 				useSlider: false,
 				processingImage: "images/processing.gif"
+				width: 400,
+				height: 400,
 			},
-			width: 400,
-			height: 400,
+			previewWidth: 400, // [int, string["sizeof(jQuery Selector)", "valueof(jQuery Selector)"]]
+			previewHeight: 400, // [int, string["sizeof(jQuery Selector)", "valueof(jQuery Selector)"]]
 			fade: {
 				speed: 500,
 				easing: "swing"
@@ -20,6 +22,21 @@
 				{title: "No Preview", href: "?tab=3"},
 				{title: "Script Error", href: "?tab=4"},
 				{title: "Warning", href: "?tab=5"}
+			],
+			errorCodes: [
+				{errorCode: "ERROR_ALREADYPROCESSING", errorMessage: "There is already a preview being generated."},
+				{errorCode: "ERROR_CORRUPTPROJECT", errorMessage: "The project has been corrupted."},
+				{errorCode: "ERROR_FONTNOTFOUND", errorMessage: "A required font was not found."},
+				{errorCode: "ERROR_GLYPHMISSING", errorMessage: "There is a glyph missing."},
+				{errorCode: "ERROR_HTMLGENERATION", errorMessage: "The HTML failed to generate."},
+				{errorCode: "ERROR_INVALIDRESPONSE", errorMessage: "An invalid response was returned by the preview request script."},
+				{errorCode: "ERROR_NODATA", errorMessage: "No preview data was returned."},
+				{errorCode: "ERROR_PROCESSING", errorMessage: "There was an error processing the preview request data."},
+				{errorCode: "ERROR_RASTERIZATION", errorMessage: "The rasterization process has failed."},
+				{errorCode: "ERROR_REQUEST", errorMessage: "There was an error requesting the preview."},
+				{errorCode: "ERROR_SCALING", errorMessage: "There was an error scaling the preview image."},
+				{errorCode: "ERROR_TEXTOVERFLOW", errorMessage: "Your text has overflowed."},
+				{errorCode: "ERROR_UNKNOWN", errorMessage: "An Unknown Error Occured."}
 			],
 			processingUrls: {
 				inline: "ajax/process.asp",
@@ -52,19 +69,18 @@
 			// use messageDialog to display and error or a popup preview
 		},
 		_getErrorMessages: function( errorCode ) {
+			var self = this,
+				errorCodes = self.options.errorCodes;
+			
 			var errorMessage = '';
-			
-			switch (errorCode)
+			for (var i = 0; i < errorCodes.length; i++)
 			{
-				case 'ERROR_UNKNOWN': errorMessage = 'An Unknown Error Occured.'; break;
-				case 'ERROR_TEXTOVERFLOW': errorMessage = 'Your text has overflowed.'; break;
-				case 'ERROR_GLYPHMISSING': errorMessage = 'There is a glyph missing.'; break;
-				case 'ERROR_CORRUPTPROJECT': errorMessage = 'The project has been corupted.'; break;
-				case 'ERROR_FONTNOTFOUND': errorMessage = 'A required font was not found.'; break;
-				case 'ERROR_RASTERIZATION': errorMessage = 'The rasterization process has failed.'; break;
-				case 'ERROR_HTMLGENERATION': errorMessage = 'The HTML failed to generate.'; break;
+				if (errorCode.toUpperCase() === errorCodes[i].errorCode.toUpperCase())
+				{
+					errorMessage = errorCodes[i].errorMessage;
+					break;
+				}
 			}
-			
 			return errorMessage;
 		},
 		_parseBool: function( str ) {
@@ -119,7 +135,7 @@
 				// ToDo: add settings change processing
 			}
 			
-			// this line will be replaced by the commented out line underneath
+			// this line will be replaced by the commented out line underneath in jQuery UI 1.9
 			$.Widget.prototype._setOption.apply( this, arguments );
 			//this._super( "_setOption", key, value );
 		},

@@ -11,6 +11,21 @@
 			processingImage: "images/processing.gif",
 			width: 400,
 			height: 400,
+			errorCodes: [
+				{errorCode: "ERROR_ALREADYPROCESSING", errorMessage: "There is already a preview being generated."},
+				{errorCode: "ERROR_CORRUPTPROJECT", errorMessage: "The project has been corrupted."},
+				{errorCode: "ERROR_FONTNOTFOUND", errorMessage: "A required font was not found."},
+				{errorCode: "ERROR_GLYPHMISSING", errorMessage: "There is a glyph missing."},
+				{errorCode: "ERROR_HTMLGENERATION", errorMessage: "The HTML failed to generate."},
+				{errorCode: "ERROR_INVALIDRESPONSE", errorMessage: "An invalid response was returned by the preview request script."},
+				{errorCode: "ERROR_NODATA", errorMessage: "No preview data was returned."},
+				{errorCode: "ERROR_PROCESSING", errorMessage: "There was an error processing the preview request data."},
+				{errorCode: "ERROR_RASTERIZATION", errorMessage: "The rasterization process has failed."},
+				{errorCode: "ERROR_REQUEST", errorMessage: "There was an error requesting the preview."},
+				{errorCode: "ERROR_SCALING", errorMessage: "There was an error scaling the preview image."},
+				{errorCode: "ERROR_TEXTOVERFLOW", errorMessage: "Your text has overflowed."},
+				{errorCode: "ERROR_UNKNOWN", errorMessage: "An Unknown Error Occured."}
+			],
 			tabs: [
 				{title: "Portrait", href: "?tab=1"},
 				{title: "Landscape", href: "?tab=2"},
@@ -310,7 +325,7 @@
 											}
 											else
 											{
-												self._displayError( "No preview data was returned.", "circle-close", true );
+												self._displayError( self._getErrorMessage("ERROR_NODATA"), "circle-close", true );
 											}
 										}
 										
@@ -323,25 +338,25 @@
 									else
 									{
 										if (oResponse.Status != 0)
-											self._displayError( "An invalid response was returned by the preview request script.", "circle-close", true );
+											self._displayError( self._getErrorMessage("ERROR_INVALIDRESPONSE"), "circle-close", true );
 									}
 								}
 							}
 							catch(e)
 							{
-								self._displayError( "There was an error processing the preview request data.", "circle-close", true );
+								self._displayError( self._getErrorMessage("ERROR_PROCESSING"), "circle-close", true );
 							}
 						},
 						error: function(oXHTTPRequest, sErrorDesc, oError)
 						{
 							if (oXHTTPRequest.status != 0)
-								self._displayError( "There was an error requesting the preview.", "circle-close", true );
+								self._displayError( self._getErrorMessage("ERROR_REQUEST"), "circle-close", true );
 						}
 					});
 				}
 				else
 				{
-					self._displayError( "There is already a preview being generated.", "alert", false );
+					self._displayError( self._getErrorMessage("ERROR_ALREADYPROCESSING"), "alert", false );
 					result = false;
 				}
 			}
@@ -382,18 +397,19 @@
 			});
 		},
 		_getErrorMessages: function( errorCode ) {
-			var errorMessage = '';
+			var self = this,
+				errorCodes = self.options.errorCodes,
+				errorMessage = '';
 			
-			switch (errorCode)
+			for (var i = 0; i < errorCodes.length; i++)
 			{
-				case 'ERROR_UNKNOWN': errorMessage = 'An Unknown Error Occured.'; break;
-				case 'ERROR_TEXTOVERFLOW': errorMessage = 'Your text has overflowed.'; break;
-				case 'ERROR_GLYPHMISSING': errorMessage = 'There is a glyph missing.'; break;
-				case 'ERROR_CORRUPTPROJECT': errorMessage = 'The project has been corupted.'; break;
-				case 'ERROR_FONTNOTFOUND': errorMessage = 'A required font was not found.'; break;
-				case 'ERROR_RASTERIZATION': errorMessage = 'The rasterization process has failed.'; break;
-				case 'ERROR_HTMLGENERATION': errorMessage = 'The HTML failed to generate.'; break;
+				if (errorCode.toUpperCase() === errorCodes[i].errorCode.toUpperCase())
+				{
+					errorMessage = errorCodes[i].errorMessage;
+					break;
+				}
 			}
+			if (errorMessage.length == 0) { errorMessage = this._getErrorMessage("ERROR_UNKNOWN"); }
 			
 			return errorMessage;
 		},
@@ -443,7 +459,7 @@
 					}
 					catch (e)
 					{
-						self._displayError( "There was an error scaling the preview image.", "circle-close", true );
+						self._displayError( self._getErrorMessage("ERROR_SCALING"), "circle-close", true );
 					}
 					
 					var newImageElem = $('\<img src="' + img.src + '" /\>')
