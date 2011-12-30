@@ -1,0 +1,78 @@
+*
+	{
+	margin: 0;
+	padding: 0;
+	}
+.clear
+	{
+	clear: both;
+	float: none;
+	}
+
+.logo
+	{
+	float: left;
+	}
+
+.question-content
+	{
+	width: 299px;
+	float: left;
+	margin-left: 212px;
+	}
+div.split fieldset
+	{
+	float: left;
+	width: auto;
+	padding: 3px 5px;
+	}
+label
+	{
+	display: block;
+	}
+.controls
+	{
+	margin-top: 6px;
+	}
+
+.preview-content
+	{
+	width: 800px;
+	margin-left: 6px;
+	float: left;
+	}
+
+.footer
+	{
+	position: relative;
+	background-image: url("../../images/elateral/FooterGrad.gif");
+    height: 100px;
+    width: 100%;
+	}
+.footer .server-details
+	{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	color: silver;
+    font-family: Arial;
+    font-size: 6pt;
+	}
+.footer .world
+	{
+	float: right;
+    padding: 0 30px 0 0;
+	}
+.footer .legal
+	{
+	color: #C3C3C3;
+    float: left;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 10px;
+	}
+.footer .legal a, .footer .legal a:visited, .footer .legal a:hover
+{
+    color: #C3C3C3;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 10px;
+}

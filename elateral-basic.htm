@@ -5,565 +5,88 @@
 		<meta http-equiv="content-script-type" content="text/javascript; charset=UTF-8" />
 		<meta http-equiv="content-style-type" content="text/css; charset=UTF-8" />
 		<title>Elateral MSP: Customize</title>
-		<link type="text/css" rel="stylesheet" href="css/elateral/CSS_Generic.css" />
-		<link type="text/css" rel="stylesheet" href="css/elateral/CSS.css" />
-		<link type="text/css" rel="stylesheet" href="css/elateral/PriceMatrixControl.css" />
-		<style type="text/css">
-			.NoWrap1 {white-space: normal;} 
-		</style>
-		<style type="text/css" id="characterCount">
-			div.CharCounterWrapper {
-				position: relative;
-				margin: 0px;
-				padding: 0px;
-				display: inline-block;
-			}
-			div.CharCounterWrapper input,
-			div.CharCounterWrapper textarea {
-				margin: 0px;
-			}
-			div.CharCounterDiv {
-				background-color: #ffffcc;
-				border: 1px solid black;
-				top: 0px;
-				left: 0px;
-				padding: 2px 5px;
-				position: absolute;
-				text-align: center;
-				font-family: Verdana, Arial, Sans-serif;
-				font-size: 10px;
-				visibility: hidden;
-				width: 40px;
-				z-index: 10000;
-			}
-		</style>
-		<style type="text/css">
-		<!-- 
-		#headerWrapper	{
-			width:100%;
-		}
-
-		#ElateralLogo	{
-			margin:0px 0 0 0px;
-			float:left;
-		}
-		-->
-		</style>
-		<style type="text/css">
-			div.inlinePreview {
-				overflow: hidden;
-				text-align: center;
-				display: table-cell;
-				vertical-align: middle;
-			}
-			
-			div.inlinePreview img {
-				cursor: move;
-				position: relative;
-				display: none;
-				margin: 0 auto;
-			}
-			
-			div.inlinePreview div.Error {
-				background-color: #ffffff;
-				display: none;
-				margin: 0 auto;
-				text-align: center;
-				position: relative;
-			}
-			
-			div#InlinePreview {
-				width: 800px;
-				height: 386px;
-				background: #ffffff url('images/processing.gif') no-repeat center center;		border: 0px solid #000000;
-			}
-		</style>
-		<style type="text/css">
-			.CharacterCount {
-				position:absolute;
-				display:none;
-				}
-			.CharacterCountShow {
-				position:absolute;
-				display: block;
-				background-color:#ffffcc;
-				font-size:12px;
-				font-family:arial;
-				padding:2, 2, 2, 2;
-				border-width:1;
-				border-color:#000000;
-				border-style:solid;
-				}
-		</style>
-		<style type="text/css">
-		<!--
-		td{font-size:1px;}
-		
-		.f1,.f1:Link
-		{
-		direction:inherit;
-		unicode-bidi:embed; 
-		font-family:Arial;
-		font-size:14px;
-		color:#000000;
-		text-decoration:none;
-		}
-		
-		.f2,.f2:Link
-		{
-		direction:inherit;
-		unicode-bidi:embed; 
-		font-family:Arial;
-		font-size:12px;
-		color:#110000;
-		text-decoration:none;
-		}
-		-->
-		</style>
-		<style type="text/css">
-		.Footer
-		{
-		height:100px;
-		width:100%;
-		background-image: url('images/elateral/FooterGrad.gif');
-		}
-		.World
-		{
-		float:right;
-		padding:0 30px 0 0;
-		}
-		.Legal
-		{
-		float:left;
-		color:#C3C3C3;
-		font-family:Verdana,Arial,Helvetica,sans-serif;
-		font-size:10px;
-		padding:70px 0 0 10;
-		}
-		.Legal a
-		{
-		color:#C3C3C3;
-		font-family:Verdana,Arial,Helvetica,sans-serif;
-		font-size:10px;
-		}
-		</style>
+		<link type="text/css" rel="stylesheet" href="css/elateral-basic/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.16.custom.css" />
+		<link rel="stylesheet" type="text/css" href="css/ui.inlinepreview.css" />
 	</head>
-	<body onload="LoadPage();">
-		<div class="" id="mainWrapper">
-			<table class="MasterTable">
-				<tbody>
-					<tr>
-						<td colspan="2" height="0" valign="top">
-							<div id="offering_configuration_Header">
-								<div id="headerWrapper"></div>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr>
-						<td width="165">
-							<img src="images/elateral/elateral-logo.gif" id="ElateralLogo" alt="Elateral Ltd" border="0" />
-						</td>
-						<td width="100%">
-							<div class="redbar"></div>
-						</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr>
-						<td height="100%" valign="top">
-							<table class="SunshineSidePanelGroup" style="width: 20px; border: none; height: 100%;">
-								<tbody>
-									<tr>
-										<td class="SunshinePanelSpace" valign="top">
-											<img class="SunshinePanelSpace" src="images/elateral/pixel_002.gif" alt="" width="5" />
-										</td>
-										<td valign="top">
-											<table border="0" cellpadding="0" cellspacing="0">
-												<tbody>
-													<tr>
-														<td>
-															<div style="display: none;">
-																<!-- S1244 -->
-																<input id="hdn_strTAG" name="hdnstrTAG" value="PanelLogoOnlyGroup" type="hidden" />
-																<input id="hdn_strCachedPath" name="hdn_strCachedPath" value="\\v-msp-db-qa\MSP\Temp\cachednavbar\" type="hidden" />
-																<input id="hdn_g_strSessionID" name="hdn_g_strSessionID" value="{4857C085-B30A-4091-8CEB-D9283E27A0FD}" type="hidden" />
-																<input id="hdn_g_strLookPath" name="hdn_g_strLookPath" value="Looks/{FE2BFBB8-1204-4C20-93B3-9FFDD9FCE849}" type="hidden" />
-																<input id="hdn_g_strLookID" name="hdn_g_strLookID" value="{FE2BFBB8-1204-4C20-93B3-9FFDD9FCE849}" type="hidden" />
-																<input id="hdn_g_strVendorUserUID" name="hdn_g_strVendorUserUID" value="{D41D46EC-5A01-475B-A56E-FD7EF292CD1F}" type="hidden" />
-																<input id="hdn_g_strPartnerUserUID" name="hdn_g_strPartnerUserUID" value="" type="hidden" />
-																<input id="hdn_g_strLanguageUID" name="hdn_g_strLanguageUID" value="{546929EC-26E1-484A-8D17-05D57A6944CD}" type="hidden" />
-																<input id="hdn_g_strLookPathMapped" name="hdn_g_strLookPathMapped" value="\\v-msp-db-qa\MSP\Permanent\looks\{FE2BFBB8-1204-4C20-93B3-9FFDD9FCE849}" type="hidden" />
-																<input id="hdn_g_strLanguageDescription" name="hdn_g_strLanguageDescription" value="IT_en-us" type="hidden" />
-																<input id="hdn_g_strUploadedFiles_Vir_StaticFiles" name="hdn_g_strUploadedFiles_Vir_StaticFiles" value="/UploadedFiles/Documents/StaticFiles/" type="hidden" />
-																<input id="hdn_CachedPanelName" name="hdn_CachedPanelName" value="{4857C085-B30A-4091-8CEB-D9283E27A0FD}_PanelLogoOnlyGroup.js" type="hidden" />
-																<!-- End S1244 -->
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</td>
-										<td class="SunshinePanelSpace" valign="top">
-											<img class="SunshinePanelSpace" src="images/elateral/pixel_002.gif" alt="" width="5" />
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
-						<td valign="top" width="100%">
-							<!-- Content Start-->
-							<table border="0" cellpadding="0" cellspacing="0" width="100%">
-								<tbody>
-									<tr>
-										<td valign="top" width="100%">
-											<!--Main Start-->
-											<table border="0" cellpadding="0" cellspacing="0" width="100%">
-												<tbody>
-													<tr>
-														<td>
-															<img class="SunshinePanelSpace" src="images/elateral/pixel.gif" alt="" />
-														</td>
-														<td valign="top" width="100%">
-															<table id="contentContainer" border="0" cellpadding="0" cellspacing="0" width="100%">
-																<tbody>
-																	<tr>
-																		<td width="100%">&nbsp;</td>
-																	</tr>
-																	<tr>
-																		<td height="7"></td>
-																	</tr>
-																	<tr>
-																		<td class="SunshineContentCell" height="100%" valign="top">
-																			<div id="CharacterCount"></div>
-																			<form action="#" id="Elateral_Questions" name="Elateral_Questions" method="post" onkeypress="return (CheckFormKey(event));" onsubmit="return (CheckSubmit(true));">
-																				<input id="Elateral_HTMLPageID" name="Elateral_HTMLPageID" value="0001C00A5061CAF271C194122008888E" type="hidden" />
-																				<input id="Elateral_StateID" name="Elateral_StateID" value="STF7161ED26E4AC99F05F6DA2B0656D8" type="hidden" />
-																				<input id="Elateral_Cancel" name="Elateral_Cancel" value="" type="hidden" />
-																				<table class="centered" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="1160">
-																					<tbody>
-																						<tr>
-																							<td height="0" width="0"></td>
-																							<td height="0" width="15"></td>
-																							<td height="0" width="3"></td>
-																							<td height="0" width="2"></td>
-																							<td height="0" width="22"></td>
-																							<td height="0" width="5"></td>
-																							<td height="0" width="95"></td>
-																							<td height="0" width="42"></td>
-																							<td height="0" width="30"></td>
-																							<td height="0" width="26"></td>
-																							<td height="0" width="120"></td>
-																							<td height="0" width="350"></td>
-																							<td height="0" width="450"></td>
-																						</tr>
-																						<tr>
-																							<td height="19" width="0"></td>
-																							<td height="19" valign="top" width="15"></td>
-																							<td height="19" valign="top" width="3"></td>
-																							<td height="19" valign="top" width="2"></td>
-																							<td height="19" valign="top" width="22"></td>
-																							<td height="19" valign="top" width="5"></td>
-																							<td height="19" valign="top" width="95"></td>
-																							<td height="19" valign="top" width="42"></td>
-																							<td height="19" valign="top" width="30"></td>
-																							<td height="19" valign="top" width="26"></td>
-																							<td height="19" valign="top" width="120"></td>
-																							<td class="centered" colspan="2" rowspan="14" height="386" width="800">
-																								<div id="InlinePreview" class="inlinePreview">
-																									<img alt="Preview Image" style="border: 0pt none; width: 800px; height: 354px; opacity: 1; display: block;" src="images/example.jpg" />
-																								</div>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="214" width="0"></td>
-																							<td height="214" valign="top" width="15"></td>
-																							<td colspan="9" rowspan="1" height="214" valign="top" width="345">
-																								<div class="CharCounterWrapper">
-																									<textarea id="xText" name="xText" rows="11" cols="31" onkeypress="return CheckTextKey(event, this, 'xEditBox', '1', 'Any', 'Any', '0', '10000', '0', '1000000000000');" class="f1" style="width: 297px; height: 209px;">A Brontosaurus is thick in the middle</textarea>
-																									<div class="CharCounterDiv" style="left: 297px; visibility: hidden;">9963</div>
-																								</div>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="20" width="0"></td>
-																							<td height="20" valign="top" width="15"></td>
-																							<td colspan="9" rowspan="1" height="20" valign="top" width="345">
-																								<span class="f2">Brontosaurus factor (-ve also valid)</span>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="1" width="0"></td>
-																							<td height="1" valign="top" width="15"></td>
-																							<td colspan="5" rowspan="3" height="34" valign="top" width="127">
-																								<input id="xScale" name="xScale" size="12" onkeypress="return CheckTextKey(event, this, 'xEditBox', '1', 'Any', 'Any', '0', '0', '0', '1000000000000');" class="f1" style="width: 101px; height: 22px;" value="100" type="text" />
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="23" width="0"></td>
-																							<td height="23" valign="top" width="15"></td>
-																							<td></td>
-																							<td height="23" valign="top" width="30">
-																								<input id="xAlign_1" name="xAlign" class="" value="left" checked="checked" type="radio" />
-																							</td>
-																							<td colspan="2" rowspan="1" height="23" valign="top" width="146">
-																								<span class="f2">Left</span>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="10" width="0"></td>
-																							<td height="10" valign="top" width="15"></td>
-																							<td></td>
-																							<td colspan="1" rowspan="3" height="22" valign="top" width="30">
-																								<input id="xAlign_2" name="xAlign" class="" value="centred" type="radio" />
-																							</td>
-																							<td colspan="2" rowspan="3" height="22" valign="top" width="146">
-																								<span class="f2">Centred</span>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="1" width="0"></td>
-																							<td height="1" valign="top" width="15"></td>
-																							<td></td>
-																							<td></td>
-																							<td></td>
-																							<td></td>
-																							<td colspan="2" rowspan="3" height="23" valign="top" width="137">
-																								<span class="f2">Over length of curve</span>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="11" width="0"></td>
-																							<td height="11" valign="top" width="15"></td>
-																							<td></td>
-																							<td></td>
-																							<td colspan="1" rowspan="2" height="22" valign="top" width="22">
-																								<input id="xType_1" name="xType" class="" value="Classic" checked="checked" type="radio" />
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="11" width="0"></td>
-																							<td height="11" valign="top" width="15"></td>
-																							<td></td>
-																							<td></td>
-																							<td></td>
-																							<td colspan="1" rowspan="3" height="22" valign="top" width="30">
-																								<input id="xAlign_3" name="xAlign" class="" value="right" type="radio" />
-																							</td>
-																							<td colspan="2" rowspan="3" height="22" valign="top" width="146">
-																								<span class="f2">Right</span>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="2" width="0"></td>
-																							<td height="2" valign="top" width="15"></td>
-																							<td></td>
-																							<td></td>
-																							<td colspan="1" rowspan="3" height="28" valign="top" width="22">
-																								<input id="xType_2" name="xType" class="" value="Short" type="radio" />
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="9" width="0"></td>
-																							<td height="9" valign="top" width="15"></td>
-																							<td></td>
-																							<td></td>
-																							<td></td>
-																							<td colspan="2" rowspan="2" height="26" valign="top" width="137">
-																								<span class="f2">Over length of text</span>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="17" width="0"></td>
-																							<td height="17" valign="top" width="15"></td>
-																							<td></td>
-																							<td></td>
-																							<td></td>
-																							<td colspan="1" rowspan="2" height="49" valign="top" width="30">
-																								<input id="xAlign_4" name="xAlign" class="" value="justified" type="radio" />
-																							</td>
-																							<td colspan="2" rowspan="2" height="49" valign="top" width="146">
-																								<span class="f2">Justfied</span>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="32" width="0"></td>
-																							<td height="32" valign="top" width="15"></td>
-																							<td></td>
-																							<td colspan="2" rowspan="1" height="32" valign="top" width="24">
-																								<input id="cbx_Bold" class="" value="Bold" onclick="SetCheckBoxValue(this, 'True', 'False');" type="checkbox" />
-																								<input id="xBold" name="xBold" value="False" type="hidden" />
-																							</td>
-																							<td colspan="2" rowspan="1" height="32" valign="top" width="100">
-																								<span class="f2">Bold</span>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="16" width="0"></td>
-																							<td height="16" valign="top" width="15"></td>
-																							<td></td>
-																							<td></td>
-																							<td colspan="3" rowspan="3" height="47" valign="top" width="122">
-																								<input style="width: 94px;" value="Cancel" name="btnElateral_Cancel" id="btnElateral_Cancel" onclick="SetControlValue('Elateral_Cancel', 'Cancel');document.forms['Elateral_Questions'].submit(); return false;" type="button" />
-																							</td>
-																							<td colspan="3" rowspan="3" height="47" valign="top" width="98">
-																								<input style="width: 94px;" value="Back" name="Elateral_Back" id="Elateral_Back" onclick="SetControlValue('Elateral_Cancel', 'Back');document.forms['Elateral_Questions'].submit(); return false;" type="button" />
-																							</td>
-																							<td colspan="1" rowspan="3" height="47" valign="top" width="120">
-																								<input style="width: 94px;" value="Next" name="Elateral_Next" id="Elateral_Next" onclick="SetControlValue('Elateral_Cancel', ''); return (CheckSubmit(false));" type="button" />
-																							</td>
-																						</tr>
-																						<tr>
-																							<td height="0" width="0"></td>
-																							<td height="7" valign="top" width="15"></td>
-																							<td></td>
-																							<td></td>
-																							<td height="7" valign="top" width="350"></td>
-																							<td height="7" valign="top" width="450"></td>
-																						</tr>
-																						<tr>
-																							<td height="24" width="0"></td>
-																							<td height="24" valign="top" width="15"></td>
-																							<td></td>
-																							<td></td>
-																							<td></td>
-																							<td height="24" valign="top" width="450">
-																								<input style="width: 100px;" value="Refresh" name="Refresh" id="Preview" onclick="ProcessInlinePreview(this, 'InlinePreview', '', false, 800, 386, '', '', false); return false;" type="button" />
-																							</td>
-																						</tr>
-																					</tbody>
-																				</table>
-																			</form>
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
-														</td>
-														<td valign="top">
-															<table border="0" cellpadding="0" cellspacing="0">
-																<tbody>
-																	<tr>
-																		<td>
-																			<img class="SunshinePanelSpace" src="Offering_Configuration_files/pixel_002.gif" alt="" width="5" />
-																		</td>
-																		<td>&nbsp;</td>
-																		<td>
-																			<img class="SunshinePanelSpace" src="Offering_Configuration_files/pixel_002.gif" alt="" width="5" />
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-											<!--Main End-->
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						<!-- Content End-->
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2" valign="bottom">
-							<div id="offering_configuration_Footer">
-								<div class="Footer">
-									<img class="World" alt="" src="images/elateral/world.gif" />
-									<div class="Legal">
-											©Copyright Elateral Ltd 2010. All rights reserved. | <a href="mailto:webmaster@elateral.com">webmaster@elateral.com</a> | <a href="http://msp-qa.elateral.com/home/disclaimer.rails">Disclaimer</a> | <a href="http://msp-qa.elateral.com/home/privacy.rails">Privacy</a> | v2.0<br />Elateral Limited, Registered in England No. 3036315. Elateral House, Crosby Way, Farnham, Surrey GU9 7XX. VAT No. GB 742 577710
-									</div>
-								</div>
-							</div>
-						<!--End Customisable Footer HTML-->
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<table border="0" cellpadding="0" cellspacing="0" style="height: 8pt; min-height: 8pt; width: 100%;">
-				<tbody>
-					<tr>
-						<td style="font-family: Arial; font-size: 6pt; color: silver;">
-							<b>Server: WEB Server IZZY   [elephant: 15 Dec 2011 (13 Dec 2011 10:59:33)]</b>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+	<body>
+		<div class="header">
+			<img src="images/elateral/elateral-logo.gif" id="logo" alt="Elateral Ltd" border="0" />
+		</div>
+		<div class="main-body">
+			<div class="question-content">
+				<form action="#" id="Elateral_Questions" name="Elateral_Questions" method="post">
+					<div class="question">
+						<label for="xText">Text for Brontasurus test</label>
+						<textarea id="xText" name="xText" rows="11" cols="31" class="f1" style="width: 297px; height: 209px;">A Brontosaurus is thick in the middle</textarea>
+					</div>
+					<div class="question">
+						<label for="xScale">Brontosaurus factor (-ve also valid)</label>
+						<input id="xScale" name="xScale" size="12" class="f1" style="width: 101px; height: 22px;" value="100" type="text" />
+					</div>
+					<div class="split">
+						<fieldset>
+							<legend>Type</legend>
+							<label for="xType_1"><input id="xType_1" name="xType" value="Classic" checked="checked" type="radio" /> Over length of curve</label>
+							<label for="xType_2"><input id="xType_2" name="xType" value="Short" type="radio" /> Over length of text</label>
+							<br />
+							<label for="xBold"><input id="xBold" name="xBold" value="Bold" type="checkbox" /> Bold</label>
+						</fieldset>
+						<fieldset>
+							<legend>Alignment</legend>
+							<label for="xAlign_1"><input id="xAlign_1" name="xAlign"value="left" checked="checked" type="radio" /> Left</label>
+							<label for="xAlign_2"><input id="xAlign_2" name="xAlign" value="centred" type="radio" /> Centered</label>
+							<label for="xAlign_3"><input id="xAlign_3" name="xAlign" value="right" type="radio" /> Right</label>
+							<label for="xAlign_4"><input id="xAlign_4" name="xAlign" value="justified" type="radio" /> Justified</label>
+						</fieldset>
+						<div class="clear"><!-- clearing div --></div>
+					</div>
+					<div class="controls">
+						<input style="width: 94px;" value="Cancel" name="btnElateral_Cancel" id="btnElateral_Cancel" type="button" />
+						<input style="width: 94px;" value="Back" name="Elateral_Back" id="Elateral_Back" type="button" />
+						<input style="width: 94px;" value="Next" name="Elateral_Next" id="Elateral_Next" type="button" />
+					</div>
+				</form>
+			</div>
+			<div id="inlinePreview" class="preview-content"></div>
+			<div class="clear"><!-- clearing div --></div>
+		</div>
+		<div class="footer">
+			<div class="legal">
+				&copy;Copyright Elateral Ltd 2010. All rights reserved. | 
+				<a href="mailto:webmaster@elateral.com">webmaster@elateral.com</a> | 
+				<a href="http://msp.elateral.com/home/disclaimer.rails">Disclaimer</a> | 
+				<a href="http://msp.elateral.com/home/privacy.rails">Privacy</a> | v2.0<br />
+				Elateral Limited, Registered in England No. 3036315. Elateral House, Crosby Way, Farnham, Surrey GU9 7XX. VAT No. GB 742 577710
+			</div>
+			<img class="world" src="images/elateral/world.gif" alt="" />
+			<span class="server-details"><b>Server: WEB Server IZZY   [elephant: 15 Dec 2011 (13 Dec 2011 10:59:33)]</b></span>
 		</div>
 		<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.16.custom.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-inlinepreview.1.2.0.js"></script>
 		<script type="text/javascript">
-		/* <![CDATA[ */
-			var j$ = jQuery.noConflict();     
-			j$(document).ready(function(){
-				j$("td[align=middle]").attr("align", "center");     
+			j$ = jQuery.noConflict();
+			j$(function() {
+				j$("div#inlinePreview").inlinepreview({
+					style: {
+						type: "simple",
+						initialSelectedTab: 0,
+						popupButtons: false,
+						buttonAlignment: "center",
+						width: "800px",
+						height: "354px"
+					},
+					formId: "#Elateral_Questions",
+					processingUrls: {
+						inline: "ajax/process.asp",
+						popup: "process.asp"
+					},
+					tabs: [
+						{id: "preview", title: "Refresh", href: "?tab=2"}
+					]
 				});
-		/* ]]> */
+			});
 		</script>
-		<script type="text/javascript" src="js/elateral/Lang_546929EC-26E1-484A-8D17-05D57A6944CD.js"></script>
-		<script type="text/javascript" src="ja/elateral/JS_Master.js"></script>
-		<script type="text/javascript">
-		/* <![CDATA[ */
-			var g_strMarkerPage = "offering_configuration.htm";
-			var _isVendorUser = true;
-		
-			function LoadPage()
-				{
-				SetNavState();
-				};
-		
-			function go(pagingSuffix)
-				{ window.location = $("pageMenu" + pagingSuffix).value; };
-		
-			function resetPage()
-				{
-				if ($("pageMenuTop1")){$("pageMenuTop1").selected = true;};
-				if ($("pageMenuBottom1")){$("pageMenuBottom1").selected = true;};
-				};
-		/* ]]> */
-		</script>
-		
-		<script type="text/javascript">
-			/*<![CDATA[*/
-				j$(document).ready(function()
-				{
-					ClickButton('Preview');
-				});
-				var previewAction = "Offering_Configuration.htm?BuildPreview=true&InstanceUID=%7B908C7399%2D0F68%2D4145%2D8B79%2D71647DDB08D3%7D&OrderQuestionsUID=%7B586DFC65%2D963A%2D4CDA%2DA2C0%2DF5EA5D29060C%7D&OutputType=3&OrderUID=%7B6B4359D7%2DEF42%2D4BFE%2D9F10%2DFC33E3279527%7D&&LID=%7BFE2BFBB8%2D1204%2D4C20%2D93B3%2D9FFDD9FCE849%7D";
-				var previewActionAJAX = "Includes/AJAX/AJAX-InlinePreview.asp?InstanceUID=%7B908C7399%2D0F68%2D4145%2D8B79%2D71647DDB08D3%7D&OrderQuestionsUID=%7B586DFC65%2D963A%2D4CDA%2DA2C0%2DF5EA5D29060C%7D&OutputType=3&OrderUID=%7B6B4359D7%2DEF42%2D4BFE%2D9F10%2DFC33E3279527%7D&&LID=%7BFE2BFBB8%2D1204%2D4C20%2D93B3%2D9FFDD9FCE849%7D";
-				var failedHTML = "\<div class=\"Error f1\"><h1>Error</h1><h3>An error occurred processing your preview, please contact support.</h3>\</div\>";
-
-				function SetCheckBoxValue(chkbx, onValue, offValue)
-				{
-					var oInput = j$(document.getElementById('x' + chkbx.value));
-					if (chkbx.checked && !chkbx.disabled)
-						oInput.val(onValue);
-					else
-						oInput.val(offValue);
-				}
-			/*]]>*/
-		</script>
-		<script type="text/javascript" src="js/elateral/Questions.js"></script>
-		<script type="text/javascript" src="js/elateral/include_functions.js"></script>
-		<script type="text/javascript">
-		/*<![CDATA[*/
-		function CheckSubmit(fAlreadySubmitted) {
-			var fOK = true;
-
-			if (document.forms['Elateral_Questions'].elements['Elateral_Cancel'].value == 'Cancel') {
-				return true;
-			}
-			fOK = CheckTextValues(document.forms['Elateral_Questions'].elements['xText'], 'EditBox', '1', 'Any', 'Any', '0', '10000', '0', '1000000000000'); 
-			if (!fOK) return false;
-			fOK = CheckTextValues(document.forms['Elateral_Questions'].elements['xScale'], 'EditBox', '1', 'Any', 'Any', '0', '0', '0', '1000000000000'); 
-			if (!fOK) return false;
-			if (!fAlreadySubmitted) {
-				document.forms['Elateral_Questions'].submit();
-			}
-			return fOK;
-		}
-		/*]]>*/
-		</script>
-		<script type="text/javascript" src="ja/elateral/include_AJAX.js"></script>
 	</body>
 </html>

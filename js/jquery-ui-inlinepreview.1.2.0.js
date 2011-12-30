@@ -7,8 +7,9 @@
 				autoSelectedPopup: null, // [null, tab.index, tab.id] if null no autoInitSelection will be made
 				popupButtons: true,
 				useSlider: false,
+				buttonAlignment: "left", // [left, center, right, justified]
 				processingImage: "images/processing.gif",
-				buttonPanelRuleColor: "#cccccc",
+				buttonPanelRuleColor: "",
 				width: 400,
 				height: 400
 			},
@@ -133,28 +134,44 @@
 			{
 				if (options.style.type.toLowerCase() != "tabs")
 				{
-					$("<hr />")
-						.css("color", options.style.buttonPanelRuleColor)
-						.css("background-color", options.style.buttonPanelRuleColor)
-						.appendTo(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
+					if (options.style.buttonPanelRuleColor.length != 0)
+					{
+						$("<hr />")
+							.css("color", options.style.buttonPanelRuleColor)
+							.css("background-color", options.style.buttonPanelRuleColor)
+							.appendTo(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
+					}
 					
 					self._buttonPanel = $("<div></div>")
 						.attr("id", "inline-preview-buttonPanel")
 						.addClass("ip-btn-panel")
 						.appendTo(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
+					
+					if (options.style.buttonAlignment.length != 0)
+					{
+						self._buttonPanel.css("text-align", options.style.buttonAlignment);
+					}
 				}
 				
 				if (options.style.popupButtons)
 				{
-					$("<hr />")
-						.css("color", options.style.buttonPanelRuleColor)
-						.css("background-color", options.style.buttonPanelRuleColor)
-						.appendTo(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
+					if (options.style.buttonPanelRuleColor.length != 0)
+					{
+						$("<hr />")
+							.css("color", options.style.buttonPanelRuleColor)
+							.css("background-color", options.style.buttonPanelRuleColor)
+							.appendTo(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
+					}
 					
 					self._popupButtonPanel = $("<div></div>")
 						.attr("id", "inline-preview-popupButtonPanel")
 						.addClass("ip-btn-panel")
 						.appendTo(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
+					
+					if (options.style.buttonAlignment.length != 0)
+					{
+						self._popupButtonPanel.css("text-align", options.style.buttonAlignment);
+					}
 				}
 				
 				for (var i = 0; i < options.tabs.length; i++)
@@ -249,7 +266,7 @@
 				switch (options.style.type)
 				{
 					case "tabs": self._tabControl.tabs("select", previewId); break;
-					default: $("button:nth-child(" + previewId + ")", self._buttonPannel).click(); break;
+					default: previewId++; $("button:nth-child(" + previewId + ")", self._buttonPannel).click(); break;
 				}
 			}
 			
@@ -454,8 +471,8 @@
 						var width = img.width;
 						var height = img.height;
 						
-						var scaleH = (width / divWidth);
-						var scaleV = (height / divHeight);
+						var scaleH = (divWidth / width);
+						var scaleV = (divHeight / height);
 						var scale = scaleH < scaleV ? scaleH : scaleV;
 						
 						if (scale != 1)
