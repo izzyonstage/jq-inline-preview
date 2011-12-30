@@ -9,11 +9,11 @@
     "licenses": [
         {
             "type": "GPL",
-            "url": "https://github.com/izzyonstage/jq-inline-preview/gpl-3.0.txt"
+            "url": "https://github.com/izzyonstage/jq-inline-preview/blob/initial-development/gpl-3.0.txt"
         }
     ],
     "dependencies": {
-        "jquery": "1",
+        "jquery": "1.7",
 		"jquery.ui": "1.8"
     },
     "description": "The main purpose of this plugin is to provide a simple and useful widget for use where you need to have an inline preview. Wether you need buttons to load static or dynamic content via ajax, either to the screen or within a message dialog.",
@@ -30,7 +30,7 @@
         }
     ],
     "files": [
-        "jquery-ui-inlinepreview-1.2.0.js",
-		"jquery.ui.inlinepreview-1.2.0.css"
+        "js/jquery-ui-inlinepreview-1.2.0.js",
+		"css/jquery.ui.inlinepreview-1.2.0.css"
     ]
 }
