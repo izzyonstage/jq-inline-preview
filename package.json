@@ -31,6 +31,8 @@
     ],
     "files": [
         "js/jquery-ui-inlinepreview-1.2.0.js",
-		"css/jquery.ui.inlinepreview-1.2.0.css"
+		"js/jquery-ui-inlinepreview-1.2.0.min.js",
+		"css/jquery.ui.inlinepreview-1.2.0.css",
+		"css/jquery.ui.inlinepreview-1.2.0.min.css"
     ]
 }
