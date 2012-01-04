@@ -4,14 +4,17 @@
 			style: {
 				type: "tabs", // [simple, buttons, tabs]
 				initialSelectedTab: null, // [null, tab.index, tab.id] if null no autoInitSelection will be made
-				autoSelectedPopup: null, // [null, tab.index, tab.id] if null no autoInitSelection will be made
-				popupButtons: true,
-				useSlider: false,
+				popupButton: true,
+				useSlider: true,
+				allowZoom: true,
+				allowDownload: true,
 				buttonAlignment: "left", // [left, center, right, justified]
 				processingImage: "images/processing.gif",
-				buttonPanelRuleColor: "",
 				width: 400,
 				height: 400
+			},
+			callbacks: {
+				imageLoaded: null
 			},
 			previewWidth: "sizeof(#preview-container)", // [int, string["sizeof(jQuery Selector)", "valueof(jQuery Selector)"]]
 			previewHeight: "sizeof(#preview-container)", // [int, string["sizeof(jQuery Selector)", "valueof(jQuery Selector)"]]
@@ -22,6 +25,15 @@
 			tabs: [
 				{id: "preview", title: "Preview", href: "#tab=1"}
 			],
+			titles: {
+				errorDialog: "An Error has Occured.",
+				warningDialog: "Warning",
+				previewDialog: "Preview",
+				zoomIn: "Zoom In",
+				zoomOut: "Zoom Out",
+				showInPopup: "Show in Dialog",
+				download: "Download File"
+			},
 			errorCodes: [
 				{errorCode: "MESSAGE_POPUP", errorMessage: "Here is the requested preview."},
 				{errorCode: "ERROR_IMAGELOAD", errorMessage: "There was an error loading the preview image."},
@@ -32,6 +44,7 @@
 				{errorCode: "ERROR_HTMLGENERATION", errorMessage: "The HTML failed to generate."},
 				{errorCode: "ERROR_INVALIDRESPONSE", errorMessage: "An invalid response was returned by the preview request script."},
 				{errorCode: "ERROR_NODATA", errorMessage: "No preview data was returned."},
+				{errorCode: "ERROR_NODOWNLOAD", errorMessage: "No download script provided to request download."},
 				{errorCode: "ERROR_PROCESSING", errorMessage: "There was an error processing the preview request data."},
 				{errorCode: "ERROR_RASTERIZATION", errorMessage: "The rasterization process has failed."},
 				{errorCode: "ERROR_REQUEST", errorMessage: "There was an error requesting the preview."},
@@ -39,24 +52,29 @@
 				{errorCode: "ERROR_TEXTOVERFLOW", errorMessage: "Your text has overflowed."},
 				{errorCode: "ERROR_UNKNOWN", errorMessage: "An Unknown Error Occured."}
 			],
-			processingUrls: {
-				inline: "",
-				popup: ""
+			processingUrl: "",
+			downloadUrl: "",
+			controls: {
+				formId: "",
+				slider: ""
 			},
-			formId: "",
-			proccessIdQuerystringParamName: "PreviewRequestGUID"
+			proccessIdQuerystringParamName: "PreviewRequestGUID",
+			log: false
 		},
 		_currentPreview: null,
 		_guidInternalPreviewResponseGUID: "",
 		_tabControl: null,
+		_clearDiv: null,
 		_tabPanel: null,
 		_previewContainer: null,
 		_sliderControl: null,
 		_buttonPanel: null,
-		_popupButtonPanel: null,
+		_controlPanel: null,
 		_messageDialog: null,
+		_lastResponse: null,
 		previewImage: null,
 		_create: function() {
+			this.log("_create");
 			this._trigger("creatingInlinePreview", null, this);
 			
 			// setup preview controls
@@ -67,6 +85,19 @@
 			// setup the inline preview element and empty it
 			elem.empty();
 			elem.addClass("ui-widget ui-ip");
+			
+			// create clearDiv for correctly sizing preview container
+			self._clearDiv = $("<div><!-- clearing div --></div>")
+				.addClass("ui-ip-clear");
+			
+			// create the control panel if required
+			self._controlPanel = $("<div></div>")
+				.attr("id", "preview-control-panel")
+				.addClass("ui-widget-header")
+				.css({
+					"background-image": "none",
+					"height": ($.type(options.style.height) === "string" ? options.style.height : parseInt(options.style.height) + "px")
+				});
 			
 			// create new preview container element (will be attached later)
 			self._previewContainer = $("<div></div>")
@@ -98,7 +129,7 @@
 					var tablink = $("<a></a>")
 						.attr("href", "#tabs-1")
 						.attr("data-popup", "false")
-						.attr("data-url", self._appendParams(options.style.type.toLowerCase() === "tabs" ? options.processingUrls.inline : "", options.tabs[i].href))
+						.attr("data-url", self._appendParams(options.processingUrl, options.tabs[i].href))
 						.addClass("ip-tab")
 						.text(tabItems[i].title)
 						.appendTo(tabitem);
@@ -110,7 +141,9 @@
 					.appendTo(tabsBox);
 				
 				// add the preview container to the tab.
-				self._previewContainer.appendTo(tabsBox);
+				self._controlPanel.appendTo(self._tabPanel);
+				self._previewContainer.appendTo(self._tabPanel);
+				self._clearDiv.appendTo(self._tabPanel);
 				
 				// add the tabs to the main element
 				tabsBox.appendTo(elem);
@@ -120,27 +153,35 @@
 			else
 			{
 				// add the preview container to the main element
+				self._controlPanel.appendTo(elem);
 				self._previewContainer.appendTo(elem);
+				self._clearDiv.appendTo(elem);
 			}
 			
 			if (options.style.useSlider)
 			{
-				self._sliderControl = $("<div></div>")
-					.attr("id", "ip-page-selector")
-					.appendTo(elem);
+				self._appendHR(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
+				
+				if (options.controls.slider.length === 0)
+				{
+					self._sliderControl = $("<div></div>")
+						.attr("id", "ip-page-selector");
+				}
+				else
+				{
+					self._sliderControl = $(options.controls.slider);
+				}
+				
+				self._sliderControl
+					.addClass("ip-slider")
+					.appendTo(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
 			}
 			
-			if (options.style.type.toLowerCase() != "tabs" || options.style.popupButtons)
+			if (options.style.type.toLowerCase() != "tabs")
 			{
 				if (options.style.type.toLowerCase() != "tabs")
 				{
-					if (options.style.buttonPanelRuleColor.length != 0)
-					{
-						$("<hr />")
-							.css("color", options.style.buttonPanelRuleColor)
-							.css("background-color", options.style.buttonPanelRuleColor)
-							.appendTo(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
-					}
+					self._appendHR(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
 					
 					self._buttonPanel = $("<div></div>")
 						.attr("id", "inline-preview-buttonPanel")
@@ -153,49 +194,124 @@
 					}
 				}
 				
-				if (options.style.popupButtons)
+				if (options.tabs.length > 1)
 				{
-					if (options.style.buttonPanelRuleColor.length != 0)
+					for (var i = 0; i < options.tabs.length; i++)
 					{
-						$("<hr />")
-							.css("color", options.style.buttonPanelRuleColor)
-							.css("background-color", options.style.buttonPanelRuleColor)
-							.appendTo(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
-					}
-					
-					self._popupButtonPanel = $("<div></div>")
-						.attr("id", "inline-preview-popupButtonPanel")
-						.addClass("ip-btn-panel")
-						.appendTo(options.style.type.toLowerCase() != "simple" ? self._tabControl : elem);
-					
-					if (options.style.buttonAlignment.length != 0)
-					{
-						self._popupButtonPanel.css("text-align", options.style.buttonAlignment);
+						if (options.style.type.toLowerCase() != "tabs")
+						{
+							self._appendButton(i, self._buttonPanel, null);
+						}
 					}
 				}
+				else
+				{
+					$("<button />")
+						.text("Refresh")
+						.css("display", "block")
+					.attr("id", "ui-ip-refresh")
+						.button({
+							icons: {
+								primary: "ui-icon-refresh"
+							},
+							text: false
+						})
+						.on("click.inline-refresh-button", function() {
+							self._requestPreview(0, $(this));
+						})
+						.appendTo(self._controlPanel);
+				}
+			}
+			
+			if (options.style.allowZoom)
+			{
+				$("<button />")
+					.text(options.titles.zoomIn)
+					.css("display", "block")
+					.attr("id", "ui-ip-zoomin")
+					.button({
+						icons: {
+							primary: "ui-icon-zoomin"
+						},
+						text: false
+					})
+					.on("click.inline-zoomin-button", function() {
+						if (self._lastResponse != null)
+						{
+							// do zoom-in function
+						}
+					})
+					.appendTo(self._controlPanel);
 				
-				for (var i = 0; i < options.tabs.length; i++)
-				{
-					if (options.style.type.toLowerCase() != "tabs")
-					{
-						self._appendButton(i, false, self._buttonPanel);
-					}
-					
-					if (options.style.popupButtons)
-					{
-						self._appendButton(i, true, self._popupButtonPanel);
-					}
-				}
+				$("<button />")
+					.text(options.titles.zoomOut)
+					.css("display", "block")
+					.attr("id", "ui-ip-zoomout")
+					.button({
+						icons: {
+							primary: "ui-icon-zoomout"
+						},
+						text: false
+					})
+					.on("click.inline-zoomout-button", function() {
+						if (self._lastResponse != null)
+						{
+							// do zoom-out function
+						}
+					})
+					.appendTo(self._controlPanel);
+			}
+			
+			if (options.style.popupButton)
+			{
+				$("<button />")
+					.text(options.titles.showInPopup)
+					.css("display", "block")
+					.attr("id", "ui-ip-popup")
+					.button({
+						icons: {
+							primary: "ui-icon-newwin"
+						},
+						text: false
+					})
+					.on("click.inline-popup-button", function() {
+						if (self._lastResponse != null)
+						{
+							self._displayMessage( self._lastResponse.PreviewLink, '', '', '', true );
+						}
+					})
+					.appendTo(self._controlPanel);
+			}
+			
+			if (options.style.allowDownload && options.downloadUrl.length != 0)
+			{
+				$("<button />")
+					.text(options.titles.download)
+					.css("display", "block")
+					.attr("id", "ui-ip-download")
+					.button({
+						icons: {
+							primary: "ui-icon-transferthick-e-w"
+						},
+						text: false
+					})
+					.on("click.inline-download-button", function() {
+						if (self._lastResponse != null)
+						{
+							self._downloadFileToClient( self._lastResponse.PreviewImage, "Image.jpg" );
+						}
+					})
+					.appendTo(self._controlPanel);
 			}
 			
 			self._messageDialog = $("<div></div>")
 				.attr("id", "preview-dialog")
-				.attr("title", "Preview Dialog")
 				.appendTo(elem);
 			
 			this._trigger("createdInlinePreview", null, this);
 		},
 		_init: function() {
+			this.log("_init");
 			// add functionality to the controls
 			this._trigger("initialisingInlinePreview", null, this);
 			
@@ -230,14 +346,15 @@
 						return false;
 					}
 				});
+				$("#tabs-1", self.element).removeClass("ui-tabs-hide");
 			}
 			
-			if (self._sliderControl != null)
+			if (self._sliderControl != null && options.tabs.length > 1)
 			{
 				self._sliderControl.slider({
 					min: 1,
 					max: options.tabs.length,
-					slide: function( event, ui ) {
+					change: function( event, ui ) {
 						self._trigger("selectingPage", null, ui);
 						
 						if (options.style.type.toLowerCase() === "tabs")
@@ -254,6 +371,9 @@
 				});
 			}
 			
+			// initialy set all the preview controls to be disabled
+			self.disableControls(true);
+			
 			if (options.style.initialSelectedTab != null)
 			{
 				var previewId = self._getTabIndex(options.style.initialSelectedTab);
@@ -268,13 +388,6 @@
 					case "tabs": self._tabControl.tabs("select", previewId); break;
 					default: previewId++; $("button:nth-child(" + previewId + ")", self._buttonPannel).click(); break;
 				}
-			}
-			
-			if (options.style.autoSelectedPopup != null && options.style.popupButtons)
-			{
-				// nth-child selector is 1-indexed so need to add 1 to the tabIndexReturned
-				var previewId = self._getTabIndex(options.style.autoSelectedPopup) + 1;
-				$("button:nth-child(" + previewId + ")", self._popupButtonPanel).click();
 			}
 			
 			this._trigger("initialisedInlinePreview", null, this);
@@ -326,7 +439,7 @@
 			if ($.type(dimensionValue) === "string")
 			{
 				var bracketPos = dimensionValue.indexOf('(');
-				var bracketEndPos = dimensionValue.indexOf(')');
+				var bracketEndPos = dimensionValue.indexOf(')', bracketPos + 1);
 				if (bracketPos != -1 && bracketEndPos != -1)
 				{
 					// must be a value from an element
@@ -351,6 +464,7 @@
 			return ($.type(dimensionValue) != 'number' || dimensionValue == 0 ? containerValue : dimensionValue);
 		},
 		_requestPreview: function( pageToPreview, ui ) {
+			this.log("_requestPreview");
 			// make the request for a new preview
 			this._trigger("requestingPreview", null, this);
 			
@@ -376,11 +490,11 @@
 					self._guidInternalPreviewResponseGUID = self._generateCustomGuid('IP', false, false);
 					ajaxUrl = self._appendParam(ajaxUrl, options.proccessIdQuerystringParamName, self._guidInternalPreviewResponseGUID)
 					
-					if (self.previewImage != null)
-						self.previewImage.off("click.inline-previe-image");
+					self._lastResponse = null;
+					self.disableControls(true);
 					self._previewContainer.find("img").animate({ opacity: 0 }, options.fade.speed, options.fade.easing);
 					
-					var postFormData = $('form' + options.formId).serializeArray();
+					var postFormData = $('form' + options.controls.formId).serializeArray();
 					
 					$.ajax({
 						type: 'POST',
@@ -393,6 +507,9 @@
 						{
 							try
 							{
+								// set the last response for future use
+								self._lastResponse = oResponse;
+								
 								if (self._guidInternalPreviewResponseGUID == oResponse.PreviewRequestGUID)
 								{
 									switch (oResponse.Status)
@@ -445,7 +562,7 @@
 				}
 				else
 				{
-					self._displayMessage( '', "alert", "ERROR_ALREADYPROCESSING", '', false );
+					self._displayMessage( '', 'alert', "ERROR_ALREADYPROCESSING", '', false );
 					result = false;
 				}
 			}
@@ -454,7 +571,20 @@
 			
 			return result;
 		},
+		_downloadFileToClient: function( filenameServer, filenameClient ) {
+			if (this.options.downloadUrl.length != 0)
+			{
+				$("#DownloadDialog").dialog("close");
+				filenameServer = filenameServer.substring(filenameServer.lastIndexOf("/") + 1);
+				location.href = this.options.downloadUrl.replace("[FilenameServer]", filenameServer).replace("[FilenameClient]", filenameClient);
+			}
+			else
+			{
+				self._displayMessage( '', '', "ERROR_NODOWNLOAD", '', false );
+			}
+		},
 		_embedPreviewImage: function( imageSrc, imageLinkURL ) {
+			this.log("_embedPreviewImage");
 			// scale and display the new preview image
 			this._trigger("embeddingScaledImage", null, this);
 			
@@ -503,12 +633,13 @@
 					
 					// clear the current contence of the container before adding the new image / anchor
 					self._previewContainer.empty();
-					
-					if ($.type(imageLinkURL) === 'string' && imageLinkURL.length != 0)
-					{
-						self.previewImage.on("click.inline-previe-image", function() { self._displayMessage( imageLinkURL, '', '', '', false ); });
-					}
-					self.previewImage.appendTo(self._previewContainer);
+					self.previewImage.appendTo(self._previewContainer)
+						.position({
+							my: "center",
+							at: "center",
+							of: self._previewContainer,
+							collision: "none"
+						});;
 					
 					self.previewImage.animate({ opacity: 1 }, options.fade.speed, options.fade.easing, function() {
 						self._previewContainer
@@ -516,6 +647,8 @@
 							.css("background-image", "none");
 						
 						self._guidInternalPreviewResponseGUID = "";
+						
+						self.disableControls(false);
 					});
 				})
 				.error(function () {
@@ -526,6 +659,8 @@
 			this._trigger("embededScaledImage", null, this);
 		},
 		_displayMessage: function( displaySrc, iconClass, errorCode, message, removeSpinner ) {
+			this.log("_displayMessage");
+			
 			// use messageDialog to display and error or a popup preview
 			var self = this,
 				options = self.options;
@@ -533,7 +668,7 @@
 			// clear previous messages
 			self._messageDialog.empty();
 			
-			var title = (displaySrc.length != 0 ? "Preview" : (iconClass == "circle-close" || iconClass.length == 0 ? "An Error Occured" : "Warning"));
+			var title = (displaySrc.length != 0 ? options.titles.previewDialog : (iconClass == "circle-close" || iconClass.length == 0 ? options.titles.errorDialog : options.titles.warningDialog));
 			
 			if (displaySrc.length != 0)
 			{
@@ -576,26 +711,37 @@
 			}
 			
 			self._messageDialog
-				.attr("title", title)
+				.dialog("option", "title", title)
 				.dialog("open");
 		},
-		_appendButton: function( tabId, isPopup, buttonPanelElem ) {
+		_appendButton: function( tabId, buttonPanelElem, existingButton ) {
 			var self = this,
 				options = self.options;
 			
 			var tab = options.tabs[tabId];
 			
-			var btn = $("<button>")
-				.addClass("ip-btn")
+			var btn = existingButton;
+			if (btn === null)
+			{
+				btn = $("<button />");
+			}
+			
+			btn.addClass("ip-btn")
 				.text(tab.title)
-				.attr("data-popup", isPopup ? "true" : "false")
-				.attr("data-url", self._appendParams(isPopup ? options.processingUrls.popup : options.processingUrls.inline, tab.href))
-				.appendTo(buttonPanelElem)
+				.attr("data-url", self._appendParams(options.processingUrl, tab.href))
 				.button()
 				.on("click.inline-preview-button", function() {
 					if ($(this).attr("data-popup") === "false") { self._currentPreview = tabId; }
 					self._requestPreview(self._currentPreview, $(this));
 				});
+				
+			if (buttonPanelElem != null)
+			{
+				btn.appendTo(buttonPanelElem)
+			}
+		},
+		_appendHR: function( parentElement ) {
+			$("<hr />").appendTo( parentElement );
 		},
 		_getErrorMessages: function( errorCode ) {
 			var self = this,
@@ -647,29 +793,82 @@
 			if ( paramName.length != 0 )
 			{
 				var newUrl = baseUrl;
-				if ( newUrl.indexOf("?") < 0)
-					newUrl += "?";
-				else
-					newUrl += "&";
 				
-				newUrl += paramName + "=" + paramValue;
+				var paramPos = baseUrl.indexOf(paramName + '=');
+				if (paramPos != -1)
+				{ // updating existing parameter
+					var endParamPos = baseUrl.indexOf('&', paramPos + 1);
+					
+					newUrl = baseUrl.substring(0, paramPos + 1);
+					newUrl += paramName + "=" + encodeURIComponent(this._escapeChars(paramValue));
+					
+					if (endParamPos != -1)
+					{
+						newUrl += baseUrl.substring(endParamPos);
+					}
+				}
+				else
+				{
+					if (newUrl.length != 0)
+					{
+						if (newUrl.indexOf("?") < 0)
+							newUrl += "?";
+						else
+							newUrl += "&";
+					}
+					
+					newUrl += paramName + "=" + encodeURIComponent(this._escapeChars(paramValue));
+				}
 				
 				return newUrl;
 			}
 			
 			return baseUrl;
 		},
+		_escapeChars: function (strIn) {
+            var strOut = strIn;
+            if ($.type(strIn) == "string") {
+                strOut = strIn.replace(/\n/g, "<br/>");
+                strOut = strOut.replace(/\r/g, "<br/>");
+                strOut = strOut.replace(/\"/g, "\\\"");
+            }
+            else if ($.type(strIn) == "boolean") {
+                if (strIn)
+                    strOut = "true";
+                else
+                    strOut = "false";
+            }
+            return strOut;
+        },
 		_setOption: function ( option, value ) {
 			switch (option) {
-				// ToDo: add settings change processing
+				case "log":
+                    this.options.log = value;
+                    break;
 			}
 			
 			// this line will be replaced by the commented out line underneath in jQuery UI 1.9
 			$.Widget.prototype._setOption.apply( this, arguments );
 			//this._super( "_setOption", key, value );
 		},
+		log: function (msg) {
+            if (!this.options.log) return;
+
+            if (window.console && console.log) { // firebug logger or IE Dev 
+                console.log(msg);
+            }
+        },
+		disableControls: function( disabled ) {
+			this.log("disableControls(" + disabled.toString() + ")");
+			$("button", this._controlPanel).button("option", "disabled", disabled);
+		},
 		destroy: function() {
 			$("button", this.element).off("click.inline-preview.button");
+			$("button", this.element).off("click.inline-popup-button");
+			$("button", this.element).off("click.inline-zoomin-button");
+			$("button", this.element).off("click.inline-zoomout-button");
+			$("button", this.element).off("click.inline-download-button");
+			$("button", this.element).off("click.inline-refresh-button");
 			if (this.previewImage != null)
 				this.previewImage.off("click.inline-previe-image");
 			

@@ -15,19 +15,11 @@
 			j$ = jQuery.noConflict();
 			j$(function() {
 				j$("div#inlinePreview").inlinepreview({
-					style: {
-						type: "buttons", // [simple, buttons, tabs]
-						initialSelectedTab: 0, // [null, tab.index, tab.id] if null no autoInitSelection will be made
-						popupButtons: true,
-						useSlider: false,
-						buttonPanelRuleColor: "#cccccc",
-						processingImage: "images/processing.gif"
+					controls: {
+						formId: "#Elateral_Questions"
 					},
-					formId: "#Elateral_Questions",
-					processingUrls: {
-						inline: "ajax/process.asp",
-						popup: "process.asp"
-					},
+					processingUrl: "ajax/process.asp",
+					downloadUrl: "process.asp?src=[FilenameServer]&filename=[FilenameClient]",
 					tabs: [
 						{id: "portrait", title: "Portrait", href: "?tab=1"},
 						{id: "landscape", title: "Landscape", href: "?tab=2"},

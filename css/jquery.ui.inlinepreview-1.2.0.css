@@ -10,15 +10,24 @@ div#preview-container
 	display: table-cell;
 	vertical-align: middle;
 	background-image: none;
+	float: left;
 	}
 div#preview-container.loading
 	{
 	background-repeat: no-repeat;
 	background-position: center;
 	}
+div#preview-control-panel { float: left; }
 	
 div.ui-ip hr
 	{
+	color: #cccccc;
+	background-color: #cccccc;
 	border: none;
 	height: 1px;
+	}
+div.ui-ip-clear
+	{
+	float: none;
+	clear : both;
 	}
