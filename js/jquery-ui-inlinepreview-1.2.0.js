@@ -72,6 +72,7 @@
 		_controlPanel: null,
 		_messageDialog: null,
 		_lastResponse: null,
+		_requesting: false,
 		previewImage: null,
 		_create: function() {
 			this.log("_create");
@@ -340,6 +341,12 @@
 					select: function(event, ui) {
 						if (options.style.type.toLowerCase() === "tabs")
 						{
+							if (options.style.useSlider)
+							{
+								self._requesting = true;
+								self._sliderControl.slider("option", "value", ui.index + 1);
+								self._requesting = false;
+							}
 							return self._requestPreview(ui.index + 1, ui.tab);
 						}
 						
@@ -357,13 +364,16 @@
 					change: function( event, ui ) {
 						self._trigger("selectingPage", null, ui);
 						
-						if (options.style.type.toLowerCase() === "tabs")
+						if (!self._requesting)
 						{
-							self._tabControl.tabs("select", ui.value - 1);
-						}
-						else
-						{
-							self._requestPreview(ui.value, $(this));
+							if (options.style.type.toLowerCase() === "tabs")
+							{
+								self._tabControl.tabs("select", ui.value - 1);
+							}
+							else
+							{
+								self._requestPreview(ui.value, $(this));
+							}
 						}
 						
 						self._trigger("pageSelected", null, ui);
@@ -869,8 +879,6 @@
 			$("button", this.element).off("click.inline-zoomout-button");
 			$("button", this.element).off("click.inline-download-button");
 			$("button", this.element).off("click.inline-refresh-button");
-			if (this.previewImage != null)
-				this.previewImage.off("click.inline-previe-image");
 			
 			this.element.empty();
 			
