@@ -14,7 +14,8 @@
     ],
     "dependencies": {
         "jquery": "1.7",
-		"jquery.ui": "1.8"
+		"jquery.ui": "1.8",
+		"featuredimagezoomer": "1.5"
     },
     "description": "The main purpose of this plugin is to provide a simple and useful widget for use where you need to have an inline preview. Wether you need buttons to load static or dynamic content via ajax, either to the screen or within a message dialog.",
     "keywords": [
@@ -30,6 +31,7 @@
         }
     ],
     "files": [
+		"js/jquery.elateral.imagezoom.js",
         "js/jquery-ui-inlinepreview-1.2.0.js",
 		"js/jquery-ui-inlinepreview-1.2.0.min.js",
 		"css/jquery.ui.inlinepreview-1.2.0.css",
