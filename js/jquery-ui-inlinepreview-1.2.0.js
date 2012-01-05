@@ -13,6 +13,7 @@
 				width: 400,
 				height: 400
 			},
+			locale: "en-GB",
 			callbacks: {
 				imageLoaded: null
 			},
@@ -222,45 +223,6 @@
 						})
 						.appendTo(self._controlPanel);
 				}
-			}
-			
-			if (options.style.allowZoom)
-			{
-				$("<button />")
-					.text(options.titles.zoomIn)
-					.css("display", "block")
-					.attr("id", "ui-ip-zoomin")
-					.button({
-						icons: {
-							primary: "ui-icon-zoomin"
-						},
-						text: false
-					})
-					.on("click.inline-zoomin-button", function() {
-						if (self._lastResponse != null)
-						{
-							// do zoom-in function
-						}
-					})
-					.appendTo(self._controlPanel);
-				
-				$("<button />")
-					.text(options.titles.zoomOut)
-					.css("display", "block")
-					.attr("id", "ui-ip-zoomout")
-					.button({
-						icons: {
-							primary: "ui-icon-zoomout"
-						},
-						text: false
-					})
-					.on("click.inline-zoomout-button", function() {
-						if (self._lastResponse != null)
-						{
-							// do zoom-out function
-						}
-					})
-					.appendTo(self._controlPanel);
 			}
 			
 			if (options.style.popupButton)
@@ -502,6 +464,7 @@
 					
 					self._lastResponse = null;
 					self.disableControls(true);
+					self._removeZoomControl();
 					self._previewContainer.find("img").animate({ opacity: 0 }, options.fade.speed, options.fade.easing);
 					
 					var postFormData = $('form' + options.controls.formId).serializeArray();
@@ -659,6 +622,7 @@
 						self._guidInternalPreviewResponseGUID = "";
 						
 						self.disableControls(false);
+						self._setZoomControl();
 					});
 				})
 				.error(function () {
@@ -667,6 +631,33 @@
 				.attr('src', imageSrc);
 			
 			this._trigger("embededScaledImage", null, this);
+		},
+		_setZoomControl: function() {
+			this.log("_setZoomControl");
+			
+			var self = this,
+				options = self.options;
+			
+			// return already if we dont require the zoom functionality
+			if (!options.style.allowZoom || self.previewImage === null) { return; }
+			
+			self.previewImage.imagezoom({
+				log: options.log,
+				locale: self.options.locale,
+				templateName: "zoomImage",
+				magnifyContainerClass: ".poster_right"
+			});
+		},
+		_removeZoomControl: function() {
+			this.log("_setZoomControl");
+			
+			var self = this,
+				options = self.options;
+			
+			// return already if we dont require the zoom functionality
+			if (!options.style.allowZoom || self.previewImage === null) { return; }
+			
+			self.previewImage.imagezoom("destroyZoom");
 		},
 		_displayMessage: function( displaySrc, iconClass, errorCode, message, removeSpinner ) {
 			this.log("_displayMessage");
@@ -875,8 +866,6 @@
 		destroy: function() {
 			$("button", this.element).off("click.inline-preview.button");
 			$("button", this.element).off("click.inline-popup-button");
-			$("button", this.element).off("click.inline-zoomin-button");
-			$("button", this.element).off("click.inline-zoomout-button");
 			$("button", this.element).off("click.inline-download-button");
 			$("button", this.element).off("click.inline-refresh-button");
 			
